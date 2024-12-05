@@ -1,10 +1,16 @@
 import bcrypt from 'bcrypt';
 import User from '../models/User';
 import mongoose from 'mongoose';
+import UserRoles from '../enum/userRoles';
 
-export const createUser = async (name: string, email: string, password: string) => {
+export const createUser = async (name: string, email: string, password: string, role: UserRoles) => {
   const hashedPassword = await bcrypt.hash(password, 10);
-  const newUser = new User({ name, email, password: hashedPassword });
+  const newUser = new User({
+    name, 
+    email, 
+    password: hashedPassword,
+    role: role || UserRoles.User
+  });
   return await newUser.save();
 };
 

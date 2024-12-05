@@ -3,8 +3,8 @@ import * as userService from '../services/userService';
 
 export const createUser = async (req: Request, res: Response) => {
   try {
-    const { name, email, password } = req.body;
-    const newUser = await userService.createUser(name, email, password);
+    const { name, email, password, role } = req.body;
+    const newUser = await userService.createUser(name, email, password,role);
     res.status(201).json(newUser);
   } catch (error: any) {
     console.error(error);
