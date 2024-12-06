@@ -4,11 +4,11 @@ import mongoose from 'mongoose';
 import UserRoles from '../enum/userRoles';
 import { IUser } from '../models/User';
 
-export const findUserActive = async (filter: object) => {
+export const findUserActive = async (filter: object) => {  //soft delete
   // Busca usuarios activos según el filtro recibido
   return await User.find({ ...filter, deletedAt: null });
 };
-export const findOneUserActive = async (filter: object) => {
+export const findOneUserActive = async (filter: object) => { //soft delete
   // Busca usuarios según el filtro recibido
   return await User.findOne({ ...filter, deletedAt: null });
 }
