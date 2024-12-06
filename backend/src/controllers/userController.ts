@@ -61,3 +61,35 @@ export const recoverUser = async (req: Request, res: Response) => {
     res.status(500).json({ message: 'Error al recuperar el usuario' });
   }
 }
+
+export const getUsers = async (req: Request, res: Response) => {
+  try {
+    console.log('Obteniendo usuarios');    
+    const users = await userService.getUsers();
+    res.status(200).json(users); // Responde con los usuarios activos
+  } catch (error: any) {
+    console.error(error);
+    res.status(500).json({ message: 'Error al obtener los usuarios' });
+  }
+};
+
+export const getUserById = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params; // Obtiene el ID de los parámetros
+    const user = await userService.getUserById(id);
+
+    if (!user) {
+      res.status(404).json({ message: 'Usuario no encontrado' });
+      return 
+    }
+
+    res.status(200).json(user); // Responde con el usuario encontrado
+  } catch (error: any) {
+    console.error(error);
+    if (error.message === 'ID inválido') {
+      res.status(400).json({ message: error.message });
+    } else {
+      res.status(500).json({ message: 'Error al obtener el usuario' });
+    }
+  }
+};

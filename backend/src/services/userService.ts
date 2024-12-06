@@ -2,7 +2,7 @@ import bcrypt from 'bcrypt';
 import User from '../models/User';
 import mongoose from 'mongoose';
 import UserRoles from '../enum/userRoles';
-import exp from 'constants';
+import { IUser } from '../models/User';
 
 export const findUserActive = async (filter: object) => {
   // Busca usuarios activos según el filtro recibido
@@ -98,3 +98,20 @@ export const recoverUser = async (userId: string):Promise<void> => {
   user.deletedAt = null;
   await user.save();
 }
+
+export const getUsers = async (): Promise<IUser[]> => {
+  console.log("Obteniendo usuarios en userService");
+  
+  return await findUserActive({});
+}
+export const getUserById = async (userId: string): Promise<IUser> => {
+  if (!mongoose.Types.ObjectId.isValid(userId)) {
+    throw new Error('ID inválido');
+  }
+  const user = await findOneUserActive({ _id: userId });
+  if (!user) {
+    throw new Error('Usuario no encontrado');
+  }
+  return user;
+}
+

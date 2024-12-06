@@ -1,14 +1,16 @@
 import { Router } from 'express';
-import { createUser, deleteUser, recoverUser, updateUser } from '../controllers/userController';
-import { authenticateToken, canEditUser, isAdmin} from '../middleware/authMiddleware';
+import { createUser, deleteUser, getUserById, getUsers, recoverUser, updateUser } from '../controllers/userController';
+import { authenticateToken, canAccessUser, isAdmin} from '../middleware/authMiddleware';
 
 const router = Router();
 
 router.route('/')
+.get( authenticateToken, isAdmin, getUsers)
 .post(createUser)
-.put( authenticateToken,canEditUser, updateUser);
+.put( authenticateToken,canAccessUser, updateUser);
 
 router.route('/:id')
+.get( authenticateToken,canAccessUser, getUserById)
 .delete( authenticateToken,isAdmin, deleteUser);//Solo un admin puede eliminar usuarios
 
 router.route('/:id/recover')

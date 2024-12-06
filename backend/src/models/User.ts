@@ -1,7 +1,7 @@
 import mongoose, { Schema, Document } from 'mongoose';
 import UserRoles from '../enum/userRoles';
 
-interface IUser extends Document {
+export interface IUser extends Document {
   name: string;
   email: string;
   password: string;

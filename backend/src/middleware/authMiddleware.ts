@@ -31,22 +31,20 @@ export const isAdmin = (req: Request, res: Response, next: NextFunction) => {
   next();
 };
 
-export const canEditUser = (req: Request, res: Response, next: NextFunction) => {
+export const canAccessUser = (req: Request, res: Response, next: NextFunction) => {
   const currentUser = req.user; // Asegúrate de que el middleware de autenticación ya haya cargado `req.user`
-  const userIdToEdit = req.body._id; // id del usuario a editar
+  const userIdToAccess = req.body._id||req.params.id; // id del usuario a editar
 
-
-
-
+  
   if (!currentUser) {
     res.status(401).json({ message: 'Usuario no autenticado' });
     return 
   }
 
-  if (currentUser.role === UserRoles.Admin || currentUser.id === userIdToEdit) {
+  if (currentUser.role === UserRoles.Admin || currentUser.id === userIdToAccess) {
     next(); // Permitir si es admin o está editando su propio usuario
     return 
   }
 
-  res.status(403).json({ message: 'No tienes permiso para editar este usuario' });
+  res.status(403).json({ message: 'No tienes permiso para acceder a esta información' });
 };
