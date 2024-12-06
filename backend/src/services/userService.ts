@@ -2,6 +2,16 @@ import bcrypt from 'bcrypt';
 import User from '../models/User';
 import mongoose from 'mongoose';
 import UserRoles from '../enum/userRoles';
+import exp from 'constants';
+
+export const findUserActive = async (filter: object) => {
+  // Busca usuarios activos según el filtro recibido
+  return await User.find({ ...filter, deletedAt: null });
+};
+export const findOneUserActive = async (filter: object) => {
+  // Busca usuarios según el filtro recibido
+  return await User.findOne({ ...filter, deletedAt: null });
+}
 
 export const createUser = async (name: string, email: string, password: string, role: UserRoles) => {
   await validateEmailUniqueness(email);
@@ -27,7 +37,7 @@ export const updateUser = async (
     throw new Error('ID inválido');
   }
 
-  const user = await User.findById(_id);
+  const user = await findOneUserActive({ _id });
   if (!user) {
     throw new Error('Usuario no encontrado');
   }
@@ -64,3 +74,15 @@ const validatePassword = (password: string): void => {
     throw new Error('La contraseña debe tener al menos 6 caracteres');
   }
 };
+
+export const deleteUser = async (userId: string) => {
+  if (!mongoose.Types.ObjectId.isValid(userId)) {
+    throw new Error('ID inválido');
+  }
+  const user = await findOneUserActive({ _id: userId });
+  if (!user) {
+    throw new Error('Usuario no encontrado');
+  }
+  user.deletedAt = new Date();
+  await user.save();
+}

@@ -6,6 +6,8 @@ interface IUser extends Document {
   email: string;
   password: string;
   role: UserRoles;
+  deletedAt?: Date|null;
+
 }
 
 const UserSchema: Schema = new Schema({
@@ -13,6 +15,7 @@ const UserSchema: Schema = new Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   role: { type: String, required: true, enum: Object.values(UserRoles), default: UserRoles.User },
+  deletedAt: { type: Date, default: null } // Campo para soft delete
 });
 
 export default mongoose.model<IUser>('User', UserSchema);
