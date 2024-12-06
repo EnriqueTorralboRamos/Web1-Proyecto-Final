@@ -50,3 +50,14 @@ export const deleteUser = async (req: Request, res: Response) => {
     }
   }
 }
+
+export const recoverUser = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    await userService.recoverUser(id);
+    res.status(200).json({message: 'Usuario recuperado'});
+  } catch (error: any) {
+    console.error(error);
+    res.status(500).json({ message: 'Error al recuperar el usuario' });
+  }
+}

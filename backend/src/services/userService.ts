@@ -86,3 +86,15 @@ export const deleteUser = async (userId: string) => {
   user.deletedAt = new Date();
   await user.save();
 }
+
+export const recoverUser = async (userId: string):Promise<void> => {
+  if (!mongoose.Types.ObjectId.isValid(userId)) {
+    throw new Error('ID inválido');
+  }
+  const user = await User.findOne({ _id: userId, deletedAt: { $ne: null } }); // Busca solo entre usuarios eliminados
+  if (!user) {
+    throw new Error('Usuario no encontrado');
+  }
+  user.deletedAt = null;
+  await user.save();
+}
