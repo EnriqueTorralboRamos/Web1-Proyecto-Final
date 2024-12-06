@@ -3,7 +3,7 @@ import * as authService from '../services/authService';
 
 export const login = async (req: Request, res: Response) => {
   try {
-    const { email, password } = req.body;
+    const { email, password} = req.body;
 
     // Llamar al servicio de autenticación
     const { token } = await authService.authenticateUser(email, password);

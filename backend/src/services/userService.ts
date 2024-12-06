@@ -4,6 +4,8 @@ import mongoose from 'mongoose';
 import UserRoles from '../enum/userRoles';
 
 export const createUser = async (name: string, email: string, password: string, role: UserRoles) => {
+  await validateEmailUniqueness(email);
+  validatePassword(password);
   const hashedPassword = await bcrypt.hash(password, 10);
   const newUser = new User({
     name, 
@@ -18,7 +20,8 @@ export const updateUser = async (
   _id: string,
   name?: string,
   email?: string,
-  password?: string
+  password?: string,
+  role?: UserRoles
 ) => {
   if (!mongoose.Types.ObjectId.isValid(_id)) {
     throw new Error('ID inválido');
@@ -28,10 +31,36 @@ export const updateUser = async (
   if (!user) {
     throw new Error('Usuario no encontrado');
   }
-
+  if (email) {
+    await validateEmailUniqueness(email, _id);
+  }
+  if (password) {
+    validatePassword(password);
+  }
+  
+  if(!user.role) user.role = UserRoles.User;
+  if (role) user.role = role;
   if (name) user.name = name;
   if (email) user.email = email;
   if (password) user.password = await bcrypt.hash(password, 10);
 
   return await user.save();
+};
+
+const validateEmailUniqueness=async(email: string, userEditerId?:string): Promise<void> => {
+    if (!email) {
+      throw new Error('El email es requerido');
+    }
+    const existingUser = await User.findOne({ email });
+    
+    if ((!userEditerId &&existingUser) ||(existingUser && (existingUser._id as mongoose.Types.ObjectId).toString() !== userEditerId)) {
+      throw new Error(`El email '${email}' ya está en uso.`);
+    }
+  }
+
+
+const validatePassword = (password: string): void => { 
+  if (password.length < 6) {
+    throw new Error('La contraseña debe tener al menos 6 caracteres');
+  }
 };

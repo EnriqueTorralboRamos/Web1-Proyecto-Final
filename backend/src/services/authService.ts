@@ -1,10 +1,12 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import User from '../models/User';
+import UserRoles from '../enum/userRoles';
 
-export const authenticateUser = async (email: string, password: string) => {
+export const authenticateUser = async (email: string, password: string
+) => {
   const user = await User.findOne({ email });
-  if (!user) {
+  if (!user) {   
     throw new Error('Usuario no encontrado');
   }
 
@@ -12,9 +14,12 @@ export const authenticateUser = async (email: string, password: string) => {
   if (!isMatch) {
     throw new Error('Contraseña incorrecta');
   }
+  if(!user.role) {
+    user.role = UserRoles.User;
+  }
 
-  // Generar el token
-  const payload = { user: { id: user.id, email: user.email } };
+// Generar el token
+const payload = { user: { id: user.id, email: user.email,role:user.role} };
   const token = jwt.sign(payload, process.env.JWT_SECRET as string, { expiresIn: '1h' });
 
   return { token, user };
