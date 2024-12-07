@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 import User from '../models/User';
-import mongoose from 'mongoose';
+import mongoose from '../config/mongoose';
 import UserRoles from '../enum/userRoles';
 import { IUser } from '../models/User';
 
@@ -99,9 +99,7 @@ export const recoverUser = async (userId: string):Promise<void> => {
   await user.save();
 }
 
-export const getUsers = async (): Promise<IUser[]> => {
-  console.log("Obteniendo usuarios en userService");
-  
+export const getUsers = async (): Promise<IUser[]> => {  
   return await findUserActive({});
 }
 export const getUserById = async (userId: string): Promise<IUser> => {

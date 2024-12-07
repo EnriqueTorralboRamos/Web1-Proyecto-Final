@@ -63,8 +63,7 @@ export const recoverUser = async (req: Request, res: Response) => {
 }
 
 export const getUsers = async (req: Request, res: Response) => {
-  try {
-    console.log('Obteniendo usuarios');    
+  try { 
     const users = await userService.getUsers();
     res.status(200).json(users); // Responde con los usuarios activos
   } catch (error: any) {
