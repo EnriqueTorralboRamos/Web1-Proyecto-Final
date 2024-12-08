@@ -5,6 +5,8 @@ import { useRouter } from 'next/navigation';
 import { createProgram } from '@/src/services/programServiceClient';
 import { programSchema } from '../../../../schemas/programSchema';
 import { z } from 'zod';
+import CountrySelect from '@/src/components/CountrySelect';
+import ParticipantSelect from '@/src/components/ParticipantAutocomplete';
 
 export default function CreateProgramForm() {
   const router = useRouter();
@@ -21,6 +23,14 @@ export default function CreateProgramForm() {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
     setFormData((prev) => ({ ...prev, [id]: value }));
+  };
+
+  const handleCountrySelect = (countryId: string) => {
+    setFormData((prev) => ({ ...prev, country: countryId }));
+  };
+
+  const handleParticipantsSelect = (selectedIds: string[]) => {
+    setFormData((prev) => ({ ...prev, participants: selectedIds.join(',') }));
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -87,27 +97,15 @@ export default function CreateProgramForm() {
         <label htmlFor="country" className="block text-sm font-medium text-gray-700">
           País *
         </label>
-        <input
-          id="country"
-          type="text"
-          value={formData.country}
-          onChange={handleChange}
-          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-        />
+          <CountrySelect onSelect={handleCountrySelect} />        
         {errors.country && <p className="text-red-500">{errors.country}</p>}
       </div>
 
       <div>
         <label htmlFor="participants" className="block text-sm font-medium text-gray-700">
-          Participantes (IDs separados por comas)
+          Participantes (se pueden añadir mas tarde)
         </label>
-        <input
-          id="participants"
-          type="text"
-          value={formData.participants}
-          onChange={handleChange}
-          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-        />
+        <ParticipantSelect onSelect={handleParticipantsSelect} />
         {errors.participants && <p className="text-red-500">{errors.participants}</p>}
       </div>
 

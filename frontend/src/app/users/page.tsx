@@ -8,7 +8,6 @@ export default function Page() {
     const router = useRouter();
     const handleLogout = () => {
         Cookies.remove('authToken'); // Elimina el token de autenticación
-        console.log('Token eliminado, redirigiendo a login...');
         router.push('/login'); // Redirige al usuario al login
       };
     return (

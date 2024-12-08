@@ -6,7 +6,6 @@ import { useRouter } from 'next/navigation';
 import { FaHome, FaList, FaSignInAlt, FaSignOutAlt } from 'react-icons/fa';
 
 export default function Sidenav() {
-  const [isOpen, setIsOpen] = useState(true); // Estado para colapsar o expandir
   const router = useRouter();
 
   const handleNavigation = (path: string) => {
@@ -15,7 +14,6 @@ export default function Sidenav() {
 
   const handleLogout = () => {
     Cookies.remove('authToken'); // Elimina el token de autenticación
-    console.log('Token eliminado, redirigiendo a login...');
     router.push('/login'); // Redirige al usuario al login
   };
 
