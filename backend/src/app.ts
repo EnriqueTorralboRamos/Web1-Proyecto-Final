@@ -11,7 +11,7 @@ console.log('Frontend URL:', process.env.FRONTEND_URL);
 app.use(cors({
   origin: (origin, callback) => {
     console.log('Origen recibido en CORS:', origin); // Depuración
-    if (!origin || origin === "http://localhost:3000") {
+    if (!origin || origin === process.env.FRONTEND_URL) {
       callback(null, true); // Permitir el origen
     } else {
       callback(new Error('No permitido por CORS')); // Bloquear otros orígenes
