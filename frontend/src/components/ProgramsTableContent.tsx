@@ -1,9 +1,11 @@
 'use client';
 
+import Link from 'next/link';
 import Table from './Table';
+import { CgDetailsMore } from 'react-icons/cg';
 
 interface Program {
-    id: string;
+    _id: string;
     name: string;
     country: { name: string }; // Si necesitas mostrar el país
     participants: string[]; // Array de IDs de participantes
@@ -15,15 +17,15 @@ interface Program {
 export default function ProgramsTableContent({ programs }: { readonly programs: ReadonlyArray<Program> }) {
   return (
     <Table
-      columns={['ID', 'Nombre', 'Descripción', 'Inicio', 'Fin', 'Estado']}
+      columns={['ID', 'Nombre', 'Inicio', 'Fin', 'Estado','Más Info']}
       data={programs}
       renderRow={(program) => (
         <>
-          <td>{program.id}</td>
           <td>{program.name}</td>
           <td>{new Date(program.startDate).toLocaleDateString()}</td>
           <td>{new Date(program.endDate).toLocaleDateString()}</td>
           <td>{program.status}</td>
+          <td className='items-center'><Link href={`/admin/programs/${program._id}`}><CgDetailsMore /></Link></td>
         </>
       )}
     />
