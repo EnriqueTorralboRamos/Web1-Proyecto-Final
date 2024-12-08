@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import axios from '../../services/axiosInstance'; // Ajusta la ruta si es necesario
 import { register } from '@/src/services/authService'; // Ajusta la ruta si es necesario
 
 export default function RegisterForm() {
@@ -26,7 +25,7 @@ export default function RegisterForm() {
     setSuccess('');
 
     try {
-      const data = await register(formData);
+      await register(formData);
       setSuccess('Usuario registrado exitosamente.');
       setTimeout(() => router.push('/login'), 2000); // Redirige al login después de 2 segundos
     } catch (err: any) {

@@ -2,7 +2,6 @@
 
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import axios from '../../services/axiosInstance'
 import Cookies from 'js-cookie';
 import { login } from '@/src/services/authService';
 
