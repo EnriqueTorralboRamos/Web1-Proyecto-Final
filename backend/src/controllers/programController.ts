@@ -3,8 +3,8 @@ import * as programService from '../services/programService';
 
 export const createProgram = async (req: Request, res: Response) => {
   try {
-    const { name, countryId, startDate, endDate } = req.body;
-    const program = await programService.createProgram(name, countryId, startDate, endDate);
+    const { name, countryId, participants,startDate, endDate } = req.body;
+    const program = await programService.createProgram(name, countryId,participants, startDate, endDate);
     res.status(201).json(program);
   } catch (error: any) {
     console.error(error);

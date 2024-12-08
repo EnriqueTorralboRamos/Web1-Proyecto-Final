@@ -8,13 +8,10 @@ import mongoose from "mongoose";
 export const createProgram = async (
     name: string,
     countryId: string,
+    participants: string[],
     startDate: Date,
     endDate: Date
 ) => {
-    console.log('name',name);
-    
-    console.log('countryID',countryId);
-    
     const country = await Country.findById(countryId);
     if (!country) {
         throw new Error('País no encontrado');
@@ -24,9 +21,16 @@ export const createProgram = async (
     if (status === ProgramStatus.COMPLETED) {
         throw new Error('La fecha de inicio no puede ser mayor a la fecha de fin');
     }
+
+    const validParticipants = await User.find({ _id: { $in: participants } });
+    if (validParticipants.length !== participants.length) {
+        throw new Error('Algunos participantes no son válidos');
+    }
+
     const newProgram = new Program({ 
         name,
         country: countryId,
+        participants: validParticipants.map(user => user._id),
         startDate, 
         endDate,
         status
