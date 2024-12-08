@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import axios from '../../services/axiosInstance'
 import Cookies from 'js-cookie';
+import { login } from '@/src/services/authService';
 
 export default function LoginForm() {
   const router = useRouter();
@@ -21,8 +22,9 @@ export default function LoginForm() {
     }
 
     try {
-      const response =await axios.post('/auth/login', { email:username, password });
-      const token = response.data.token;
+      const response =await login({ email:username, password });
+      
+      const token = response.token;
 
       Cookies.set('authToken', token, {
         path: '/',         // Accesible en toda la app
@@ -31,13 +33,12 @@ export default function LoginForm() {
       });
 
       alert('Inicio de sesión exitoso');
-      console.log('token recibido',response.data.token);
 
       router.push('/'); // Redirigir al usuario a la página principal
     } catch(err:any) {
       if (err.response && err.response.status === 401) {
         setError('Usuario o contraseña incorrectos.');
-      } else {
+      } else {      
         setError('Ocurrió un error al conectar con el servidor.');
       }
     }

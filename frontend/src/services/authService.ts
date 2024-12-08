@@ -1,9 +1,27 @@
-import Cookies from 'js-cookie';
+import axiosInstance from './axiosInstance';
 
-export const getToken = () => {
-    return Cookies.get('authToken');
+interface LoginData {
+  email: string;
+  password: string;
 }
 
-export const removeToken = () => {
-    Cookies.remove('authToken',{path: '/'});
+interface RegisterData {
+  name: string;
+  email: string;
+  password: string;
 }
+
+export const login = async (data: LoginData) => {
+  const response = await axiosInstance.post('/auth/login', data);
+  return response.data; // Devuelve el token u otros datos de respuesta
+};
+
+export const register = async (data: RegisterData) => {
+  const response = await axiosInstance.post('/users', data);
+  return response.data; // Devuelve datos relacionados con el registro
+};
+
+export const logout = async () => {
+  const response = await axiosInstance.post('/auth/logout');
+  return response.data; // Devuelve confirmación de logout
+};
