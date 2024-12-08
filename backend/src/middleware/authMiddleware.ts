@@ -4,7 +4,7 @@ import UserRoles from '../enum/userRoles';
 
 export const authenticateToken = (req: Request, res: Response, next: NextFunction) => {
 
-  const token = req.headers['authorization']?.split(' ')[1]; // Obtener token del encabezado Authorization
+  const token = req.headers['authorization']?.split(' ')[1]; // Obtener token del encabezado Authorization  
   if (!token) {
     res.status(401).json({ message: 'Token requerido' });
     return
