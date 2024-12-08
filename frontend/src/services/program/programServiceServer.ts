@@ -1,4 +1,4 @@
-import axiosServerInstance from './axiosServerInstance';
+import axiosServerInstance from '../axiosServerInstance';
 
 export const getPrograms = async () => {
   const response = await axiosServerInstance.get('/programs');

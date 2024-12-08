@@ -1,6 +1,6 @@
 export default function SkeletonTable({ rows = 5, columns = 4 }: { rows?: number; columns?: number }) {
     return (
-      <div className="overflow-x-auto">
+      <div className="mt-6 overflow-x-auto">
         <table className="min-w-full divide-y divide-gray-200 border border-gray-300">
           <thead className="bg-gray-100">
             <tr>

@@ -33,7 +33,7 @@ export default function LoginForm() {
 
       alert('Inicio de sesión exitoso');
 
-      router.push('/'); // Redirigir al usuario a la página principal
+      router.push('/admin'); // Redirigir al usuario a la página principal
     } catch(err:any) {
       if (err.response && err.response.status === 401) {
         setError('Usuario o contraseña incorrectos.');

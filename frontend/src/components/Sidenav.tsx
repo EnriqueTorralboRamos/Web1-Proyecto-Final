@@ -1,16 +1,14 @@
 'use client'; // Necesario para manejar eventos en el cliente
 
-import { useState } from 'react';
 import Cookies from 'js-cookie';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { BiWorld } from 'react-icons/bi';
 import { FaHome, FaList, FaSignInAlt, FaSignOutAlt } from 'react-icons/fa';
 
 export default function Sidenav() {
   const router = useRouter();
 
-  const handleNavigation = (path: string) => {
-    router.push(path); // Navega a la ruta
-  };
 
   const handleLogout = () => {
     Cookies.remove('authToken'); // Elimina el token de autenticación
@@ -18,36 +16,27 @@ export default function Sidenav() {
   };
 
   return (
-    <div className={`"flex h-full flex-col px-3 py-4 md:px-2"`}>
-      {/* Botón para colapsar */}
-      {/* <button
-        className="p-2 text-gray-400 hover:text-white focus:outline-none"
-        onClick={() => setIsOpen(!isOpen)}
-      >
-        {isOpen ? '<' : '>'}
-      </button> */}
-
-      {/* Navegación */}
-        <nav className="mt-4 space-y-2">
-            <button
+    <div className={`"flex h-full flex-col px-3 py-10 md:px-2"`}>
+        <nav className="flex flex-col h-full flex-grow mt-4 space-y-2">
+            <Link 
+                href="/admin"
                 className="flex h-[48px] w-full grow items-center justify-center gap-2 rounded-md bg-gray-50 p-3 text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3"
-                onClick={() => handleNavigation('/admin')}
-            >
+                >
                 <FaHome className="mr-2" /> <div className="hidden md:block">Inicio</div>
-            </button>
-            <button
+            </Link>
+            <Link
                 className="flex h-[48px] w-full grow items-center justify-center gap-2 rounded-md bg-gray-50 p-3 text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3"
-                onClick={() => handleNavigation('/admin/programs')}
+                href="/admin/programs"
             >
                 <FaList className="mr-2" /> <div className="hidden md:block">Programas</div>
-            </button>
-            <button
+            </Link>
+            <Link
                 className="flex h-[48px] w-full grow items-center justify-center gap-2 rounded-md bg-gray-50 p-3 text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3"
-                onClick={() => handleNavigation('/login')}
+                href="/admin/countries"
             >
-                <FaSignInAlt className="mr-2" /> <div className="hidden md:block">Login</div>
-            </button>
-            <div className="hidden h-auto w-full grow rounded-md bg-gray-50 md:block"></div>
+                <BiWorld  className="mr-2" /> <div className="hidden md:block">Paises</div>
+            </Link>
+            <div className="flex-grow"></div>
             <button
               className="flex h-[48px] w-full grow items-center justify-center gap-2 rounded-md bg-gray-50 p-3 text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3"
               onClick={handleLogout}

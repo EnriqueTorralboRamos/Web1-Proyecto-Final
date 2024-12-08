@@ -1,5 +1,5 @@
 import ProgramsTableContent from './ProgramsTableContent';
-import { getPrograms } from '../services/programServiceServer';
+import { getPrograms } from '../services/program/programServiceServer';
 import SkeletonTable from './SkeletonTable';
 
 export default async function ProgramsTable() {

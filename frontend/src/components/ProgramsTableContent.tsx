@@ -25,7 +25,7 @@ export default function ProgramsTableContent({ programs }: { readonly programs: 
           <td>{new Date(program.startDate).toLocaleDateString()}</td>
           <td>{new Date(program.endDate).toLocaleDateString()}</td>
           <td>{program.status}</td>
-          <td className='items-center'><Link href={`/admin/programs/${program._id}`}><CgDetailsMore /></Link></td>
+          <td><Link href={`/admin/programs/${program._id}`}><CgDetailsMore /></Link></td>
         </>
       )}
     />

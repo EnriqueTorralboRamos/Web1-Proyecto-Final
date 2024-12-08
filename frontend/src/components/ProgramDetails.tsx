@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { getProgramById } from '@/src/services/programServiceClient';
+import { getProgramById } from '@/src/services/program/programServiceClient';
 
 export default function ProgramDetails({ programId }: { readonly programId: string }) {
   const [program, setProgram] = useState<any>(null);

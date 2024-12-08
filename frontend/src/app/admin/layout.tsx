@@ -1,5 +1,4 @@
-import AdminProtection from "@/src/components/AdminProtection";
-import ProtectedLayout from "@/src/components/ProtectedLayout";
+import AdminProtection from "@/src/components/temp-middleware-solution/AdminProtection";
 import Sidenav from "@/src/components/Sidenav";
 
 export default function AdminLayout({

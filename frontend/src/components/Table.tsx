@@ -8,23 +8,23 @@ interface TableProps<T> {
 
 export default function Table<T>({ columns, data, renderRow }: TableProps<T>) {
   return (
-    <div className="overflow-x-auto">
-      <table className="min-w-full divide-y divide-gray-200 border border-gray-300">
-        <thead className="bg-gray-100">
+    <div className="mt-6 relative overflow-x-auto shadow-md sm:rounded-lg">
+      <table className=" w-full text-base text-left rtl:text-right text-gray-500 dark:text-gray-400">
+        <thead className=" text-sm text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
           <tr>
             {columns.map((column) => (
               <th
                 key={column}
-                className="px-4 py-2 text-left text-sm font-medium text-gray-700"
+                className="px-6 py-3"
               >
                 {column}
               </th>
             ))}
           </tr>
         </thead>
-        <tbody className="divide-y divide-gray-200">
+        <tbody className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
           {data.map((item, index) => (
-            <tr key={index} className="hover:bg-gray-50">
+            <tr key={index} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
               {renderRow(item, index)}
             </tr>
           ))}

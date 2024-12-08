@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { createProgram } from '@/src/services/programServiceClient';
+import { createProgram } from '@/src/services/program/programServiceClient';
 import { programSchema } from '../../../../schemas/programSchema';
 import { z } from 'zod';
 import CountrySelect from '@/src/components/CountrySelect';

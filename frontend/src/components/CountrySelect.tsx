@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { getCountries } from '@/src/services/countryServiceClient';
+import { getCountries } from '@/src/services/country/countryServiceClient';
 
 export default function CountrySelect({ onSelect }: { readonly onSelect: (countryId: string) => void }) {
   const [countries, setCountries] = useState<{ _id: string; name: string }[] | null>(null);
