@@ -17,7 +17,7 @@ interface Program {
 export default function ProgramsTableContent({ programs }: { readonly programs: ReadonlyArray<Program> }) {
   return (
     <Table
-      columns={['ID', 'Nombre', 'Inicio', 'Fin', 'Estado','Más Info']}
+      columns={[ 'Nombre', 'Inicio', 'Fin', 'Estado','Más Info']}
       data={programs}
       renderRow={(program) => (
         <>
