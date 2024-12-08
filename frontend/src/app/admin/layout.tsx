@@ -1,11 +1,14 @@
+import AdminProtection from "@/src/components/AdminProtection";
+import ProtectedLayout from "@/src/components/ProtectedLayout";
 import Sidenav from "@/src/components/Sidenav";
 
-export default function RootLayout({
+export default function AdminLayout({
     children,
   }: Readonly<{
     children: React.ReactNode;
   }>) {
     return (
+      <AdminProtection>
         <div className="flex h-screen">
         {/* Barra lateral */}
         <Sidenav />
@@ -14,6 +17,7 @@ export default function RootLayout({
           {children}
         </main>
       </div>
+      </AdminProtection>
     );
   }
   

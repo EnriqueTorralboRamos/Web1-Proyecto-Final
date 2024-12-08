@@ -3,9 +3,12 @@ import jwt from 'jsonwebtoken';
 import UserRoles from '../enum/userRoles';
 
 export const authenticateToken = (req: Request, res: Response, next: NextFunction) => {
+  console.log('Autenticando token');
+  
 
   const token = req.headers['authorization']?.split(' ')[1]; // Obtener token del encabezado Authorization  
   if (!token) {
+    
     res.status(401).json({ message: 'Token requerido' });
     return
   }
@@ -13,6 +16,8 @@ export const authenticateToken = (req: Request, res: Response, next: NextFunctio
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as jwt.JwtPayload;
     req.user = decoded.user; // Agregar el usuario decodificado al objeto de solicitud
+    console.log('Token válido');
+    
     next(); // Pasar al siguiente middleware o controlador
   } catch (error) {
     res.status(403).json({ message: 'Token inválido o expirado' });

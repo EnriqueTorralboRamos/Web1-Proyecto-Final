@@ -6,12 +6,10 @@ import programRoutes from './routes/programRoutes';
 import cors from 'cors';
 
 const app = express();
-console.log('Frontend URL:', process.env.FRONTEND_URL);
 // Configurar CORS para permitir solicitudes desde el frontend
 app.use(cors({
   origin: (origin, callback) => {
-    console.log('Origen recibido en CORS:', origin); // Depuración
-    if (!origin || origin === process.env.FRONTEND_URL) {
+    if (!origin || origin === process.env.FRONTEND_URL) {      
       callback(null, true); // Permitir el origen
     } else {
       callback(new Error('No permitido por CORS')); // Bloquear otros orígenes

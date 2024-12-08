@@ -11,6 +11,10 @@ export const createProgram = async (
     startDate: Date,
     endDate: Date
 ) => {
+    console.log('name',name);
+    
+    console.log('countryID',countryId);
+    
     const country = await Country.findById(countryId);
     if (!country) {
         throw new Error('País no encontrado');

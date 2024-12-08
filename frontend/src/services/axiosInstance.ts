@@ -11,12 +11,13 @@ const axiosInstance = axios.create({
 // Interceptor para añadir el token en las solicitudes
 axiosInstance.interceptors.request.use((config) => {
   const token = Cookies.get('authToken'); // Leer el token de las cookies
+  
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
   return config;
 }, (error) => {
-  return Promise.reject(error);
+  return Promise.reject(new Error(error));
 });
 
 export default axiosInstance;

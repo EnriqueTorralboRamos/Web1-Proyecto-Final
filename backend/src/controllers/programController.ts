@@ -13,8 +13,8 @@ export const createProgram = async (req: Request, res: Response) => {
 };
 
 export const getPrograms = async (req: Request, res: Response) => {
-  try {
-    const programs = await programService.getPrograms();
+  try {    
+    const programs = await programService.getPrograms();    
     res.status(200).json(programs);
   } catch (error: any) {
     console.error(error);
