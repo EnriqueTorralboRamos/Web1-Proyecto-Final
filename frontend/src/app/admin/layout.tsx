@@ -1,5 +1,5 @@
-import AdminProtection from "@/src/components/temp-middleware-solution/AdminProtection";
 import Sidenav from "@/src/components/Sidenav";
+import PrivateRoute from "@/src/components/temp-middleware-solution/ProtectedLayout";
 
 export default function AdminLayout({
     children,
@@ -7,7 +7,7 @@ export default function AdminLayout({
     children: React.ReactNode;
   }>) {
     return (
-      <AdminProtection>
+      <PrivateRoute>
         <div className="flex h-screen">
         {/* Barra lateral */}
         <Sidenav />
@@ -16,7 +16,7 @@ export default function AdminLayout({
           {children}
         </main>
       </div>
-      </AdminProtection>
+      </PrivateRoute>
     );
   }
   

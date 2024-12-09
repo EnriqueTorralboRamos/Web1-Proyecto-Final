@@ -1,4 +1,4 @@
-import CountryTable from '@/src/components/CountryTable';
+import CountryTable from '@/src/components/country/CountryTable';
 import SkeletonTable from '@/src/components/SkeletonTable';
 import { Suspense } from 'react';
 

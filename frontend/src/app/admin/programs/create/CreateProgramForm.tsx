@@ -5,8 +5,9 @@ import { useRouter } from 'next/navigation';
 import { createProgram } from '@/src/services/program/programServiceClient';
 import { programSchema } from '../../../../schemas/programSchema';
 import { z } from 'zod';
-import CountrySelect from '@/src/components/CountrySelect';
-import ParticipantSelect from '@/src/components/ParticipantAutocomplete';
+import CountrySelect from '@/src/components/country/CountrySelect';
+import ParticipantSelect from '@/src/components/program/ParticipantAutocomplete';
+import Link from 'next/link';
 
 interface ProgramFormProps {
   initialData?: {
@@ -170,6 +171,11 @@ export default function ProgramForm(
         className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
       >
         {onSubmit ? 'Guardar Cambios' : 'Crear Programa'}
+      </button>
+      <button>
+        <Link href="/admin/programs" className="w-full bg-red-600 text-white py-2 px-4 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
+          Cancelar
+        </Link>
       </button>
     </form>
   );

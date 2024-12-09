@@ -1,7 +1,7 @@
 'use client';
 import { MdDeleteOutline } from "react-icons/md";
-import Table from "./Table";
-import { deleteCountry } from "../services/country/countryServiceClient";
+import Table from "../Table";
+import { deleteCountry } from "../../services/country/countryServiceClient";
 import { useState } from "react";
 
 interface ICountry {

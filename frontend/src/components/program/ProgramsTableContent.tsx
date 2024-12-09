@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import Table from './Table';
+import Table from '../Table';
 import { CgDetailsMore } from 'react-icons/cg';
 
 interface Program {

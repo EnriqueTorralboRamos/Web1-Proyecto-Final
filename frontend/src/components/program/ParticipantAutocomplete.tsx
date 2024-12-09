@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import CircularProgress from '@mui/material/CircularProgress';
-import { getParticipants } from '@/src/services/userServiceClient';
+import { getParticipants } from '@/src/services/users/userServiceClient';
 
 interface ParticipantAutocompleteProps {
   onSelect: (selectedIds: string[]) => void;

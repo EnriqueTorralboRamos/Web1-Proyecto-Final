@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 import SkeletonTable from '@/src/components/SkeletonTable';
-import ProgramsTable from '@/src/components/ProgramsTable';
+import ProgramsTable from '@/src/components/program/ProgramsTable';
 import Link from 'next/link';
 
 export default function ProgramsPage() {

@@ -1,4 +1,4 @@
-import axiosInstance from './axiosInstance';
+import axiosInstance from '../axiosInstance';
 
 export const getParticipants = async () => {
   const response = await axiosInstance.get('/users'); // Ajusta la ruta según tu backend

@@ -4,7 +4,7 @@ import Cookies from 'js-cookie';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { BiWorld } from 'react-icons/bi';
-import { FaHome, FaList, FaSignInAlt, FaSignOutAlt } from 'react-icons/fa';
+import { FaHome, FaList, FaSignInAlt, FaSignOutAlt, FaUsers } from 'react-icons/fa';
 
 export default function Sidenav() {
   const router = useRouter();
@@ -35,6 +35,11 @@ export default function Sidenav() {
                 href="/admin/countries"
             >
                 <BiWorld  className="mr-2" /> <div className="hidden md:block">Paises</div>
+            </Link>
+            <Link
+              className="flex h-[48px] w-full grow items-center justify-center gap-2 rounded-md bg-gray-50 p-3 text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3"
+                href="/admin/users"
+            > <FaUsers className="mr-2" /> <div className="hidden md:block">Usuarios</div>
             </Link>
             <div className="flex-grow"></div>
             <button

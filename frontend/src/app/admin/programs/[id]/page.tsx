@@ -1,4 +1,4 @@
-import ProgramDetails from '@/src/components/ProgramDetails';
+import ProgramDetails from '@/src/components/program/ProgramDetails';
 import Link from 'next/link';
 import { Suspense } from 'react';
 
