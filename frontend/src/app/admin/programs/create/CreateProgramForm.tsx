@@ -32,6 +32,7 @@ export default function ProgramForm(
   const [formData, setFormData] = useState(initialData);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [success, setSuccess] = useState(false);
+  const [globalError, setGlobalError] = useState<string | null>(null); 
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
@@ -50,6 +51,7 @@ export default function ProgramForm(
     e.preventDefault();
     setErrors({});
     setSuccess(false);
+    setGlobalError(null); 
 
     try {
       // Validar datos con Zod
@@ -71,7 +73,7 @@ export default function ProgramForm(
       setFormData(initialData);
 
       router.push('/admin/programs'); // Redirige a la lista de programas
-    } catch (err: any) {
+    }  catch (err: any) {
       if (err instanceof z.ZodError) {
         // Manejar errores de validación de Zod
         const fieldErrors: Record<string, string> = {};
@@ -81,17 +83,29 @@ export default function ProgramForm(
           }
         });
         setErrors(fieldErrors);
+      } else if (err.response) {
+        // Capturar errores del backend y mostrarlos
+        const backendErrors = err.response.data.errors;
+        if (backendErrors && typeof backendErrors === 'object') {
+          // Si el backend envía errores específicos para campos
+          setErrors(backendErrors);
+        } else {
+          // Mostrar mensaje global si no hay errores específicos
+          setGlobalError(err.response.data.message || 'Ocurrió un error inesperado en el servidor.');
+        }
       } else {
-        // Manejar errores de la API
-        setErrors(err.response?.data?.message || 'Ocurrió un error inesperado en el servidor.');
-        console.error('Error en la API:', err.response || err.message);
+        // Errores generales (como problemas de red)
+        setGlobalError(err.message || 'Ocurrió un error inesperado.');
+        console.error('Error:', err.message);
       }
     }
+
   };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      {success && <p className="text-green-500">Operación exitosa.</p>}
+      {success && <p className="text-green-500">Programa creado exitosamente.</p>}
+      {globalError && <p className="text-red-500">{globalError}</p>} {/* Mensaje de error global */}
 
       <div>
         <label htmlFor="name" className="block text-sm font-medium text-gray-700">
