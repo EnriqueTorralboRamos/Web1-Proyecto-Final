@@ -1,4 +1,4 @@
-import SkeletonTable from "@/src/components/SkeletonTable";
+import SkeletonTable from "@/src/components/skeletons/SkeletonTable";
 import UsersTable from "@/src/components/users/UserTable";
 import { Suspense } from "react";
 

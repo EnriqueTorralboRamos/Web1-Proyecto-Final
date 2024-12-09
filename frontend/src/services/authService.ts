@@ -20,8 +20,3 @@ export const register = async (data: RegisterData) => {
   const response = await axiosInstance.post('/users', data);
   return response.data; // Devuelve datos relacionados con el registro
 };
-
-export const logout = async () => {
-  const response = await axiosInstance.post('/auth/logout');
-  return response.data; // Devuelve confirmación de logout
-};

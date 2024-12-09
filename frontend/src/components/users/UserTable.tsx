@@ -1,6 +1,7 @@
 import { getUsers } from '@/src/services/users/userServiceServer';
-import SkeletonTable from '../SkeletonTable';
+import SkeletonTable from '../skeletons/SkeletonTable';
 import UserTableContent from './UserTableContent';
+import LoadingErrorCacther from '../temp-middleware-solution/LoadingErrorCatcher';
 
 export default async function UsersTable() {
     try {
@@ -8,6 +9,6 @@ export default async function UsersTable() {
         const users = await getUsers(); // Obtiene datos en el servidor
         return <UserTableContent users={users} />;
     } catch (error) {
-        return <SkeletonTable rows={5} columns={4} />
+        return <LoadingErrorCacther><SkeletonTable rows={5} columns={4} /></LoadingErrorCacther>
     }
 }

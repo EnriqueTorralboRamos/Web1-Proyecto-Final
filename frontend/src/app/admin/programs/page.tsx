@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import SkeletonTable from '@/src/components/SkeletonTable';
+import SkeletonTable from '@/src/components/skeletons/SkeletonTable';
 import ProgramsTable from '@/src/components/program/ProgramsTable';
 import Link from 'next/link';
 

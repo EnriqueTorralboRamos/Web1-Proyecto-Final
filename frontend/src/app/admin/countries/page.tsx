@@ -1,5 +1,5 @@
 import CountryTable from '@/src/components/country/CountryTable';
-import SkeletonTable from '@/src/components/SkeletonTable';
+import SkeletonTable from '@/src/components/skeletons/SkeletonTable';
 import { Suspense } from 'react';
 
 export default function CountriesPage() {
