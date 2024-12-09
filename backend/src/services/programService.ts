@@ -71,10 +71,15 @@ export const updateProgram = async (
 }
 
 export const deleteProgram = async (programId: string) => {
-    const program = await Program.findByIdAndDelete(programId);
+    const program = await Program.findById(programId);
     if (!program) {
         throw new Error('Programa no encontrado');
     }
+    if (program.participants.length > 0) {
+        throw new Error('No se puede eliminar el programa porque existen participantes asociados');
+    }
+    return await Program.findByIdAndDelete(programId);
+
 }
 
 export const addParticipant = async (programId: string, userId: string) => {

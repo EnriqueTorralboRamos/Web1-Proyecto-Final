@@ -62,7 +62,9 @@ export const deleteProgram = async (req: Request, res: Response) => {
     console.error(error);
     if (error.message === 'Programa no encontrado') {
       res.status(404).json({ message: error.message });
-    } else {
+    }else if (error.message === 'No se puede eliminar el programa porque existen participantes asociados') {
+      res.status(400).json({ message: error.message });
+    }else {
       res.status(500).json({ message: 'Error al eliminar el programa' });
     }
   }
