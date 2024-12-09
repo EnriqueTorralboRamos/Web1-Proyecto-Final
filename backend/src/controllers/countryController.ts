@@ -45,7 +45,9 @@ export const deleteCountry = async (req: Request, res: Response) => {
         console.error(error);
         if (error.message === 'País no encontrado') {
             res.status(404).json({ message: error.message });
-        } else {
+        } else if (error.message === 'No se puede eliminar el país porque existen programas asociados') {
+            res.status(400).json({ message: error.message });
+        }else {
             res.status(500).json({ message: 'Error al eliminar el país' });
         }
     }

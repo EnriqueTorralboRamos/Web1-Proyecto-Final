@@ -1,4 +1,5 @@
 import Country from "../models/Country";
+import Program from "../models/Program";
 
 
 export const createCountry = async (
@@ -37,15 +38,19 @@ export const updateCountry = async (
     return await country.save();
 }
 
-export const deleteCountry = async (_id: string) => {
-    const country = await Country.findByIdAndDelete(_id);
+export const deleteCountry = async (countryId: string) => {
+    const existingPrograms = await Program.find({ country: countryId });
+  if (existingPrograms.length > 0) {
+    throw new Error('No se puede eliminar el país porque existen programas asociados');
+  }
+    const country = await Country.findByIdAndDelete(countryId);
     if(!country) {
         throw new Error('País no encontrado');
     }
 }
 
-export const getCountry = async (_id: string) => {
-    const country = await Country.findById(_id);
+export const getCountry = async (countryId: string) => {
+    const country = await Country.findById(countryId);
     if(!country) {
         throw new Error('País no encontrado');
     }
