@@ -9,6 +9,10 @@ const app = express();
 // Configurar CORS para permitir solicitudes desde el frontend
 app.use(cors({
   origin: (origin, callback) => {
+    console.log(origin);
+    console.log(process.env.FRONTEND_URL);
+    
+    
     if (!origin || origin === process.env.FRONTEND_URL) {      
       callback(null, true); // Permitir el origen
     } else {
