@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { createProgram } from '@/src/services/program/programServiceClient';
 import { programSchema } from '../../../../schemas/programSchema';
@@ -8,15 +8,28 @@ import { z } from 'zod';
 import CountrySelect from '@/src/components/CountrySelect';
 import ParticipantSelect from '@/src/components/ParticipantAutocomplete';
 
-export default function CreateProgramForm() {
+interface ProgramFormProps {
+  initialData?: {
+    name: string;
+    country: string;
+    participants: string[];
+    startDate: string;
+    endDate: string;
+  };
+  onSubmit?: (values: {
+    name: string;
+    country: string;
+    participants: string[];
+    startDate: string;
+    endDate: string;
+  }) => Promise<void>;
+}
+
+export default function ProgramForm(
+  {initialData= { name: '', country: '', participants: [], startDate: '', endDate: '' }, onSubmit,}: Readonly<ProgramFormProps>,
+) {
   const router = useRouter();
-  const [formData, setFormData] = useState({
-    name: '',
-    country: '',
-    participants: '',
-    startDate: '',
-    endDate: '',
-  });
+  const [formData, setFormData] = useState(initialData);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [success, setSuccess] = useState(false);
 
@@ -30,7 +43,7 @@ export default function CreateProgramForm() {
   };
 
   const handleParticipantsSelect = (selectedIds: string[]) => {
-    setFormData((prev) => ({ ...prev, participants: selectedIds.join(',') }));
+    setFormData((prev) => ({ ...prev, participants: selectedIds }));
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -40,21 +53,22 @@ export default function CreateProgramForm() {
 
     try {
       // Validar datos con Zod
-      programSchema.parse(formData);
+      const dataToValidate = {
+        ...formData,
+        participants: formData.participants.join(','), // Convertir array a string
+      };
+      programSchema.parse(dataToValidate);
 
       // Enviar datos a la API
-      await createProgram({
-        name: formData.name,
-        countryId: formData.country,
-        participants: formData.participants
-          ? formData.participants.split(',')
-          : [],
-        startDate: formData.startDate,
-        endDate: formData.endDate,
-      });
+      if (onSubmit) {
+        await onSubmit(formData);
+      } else {
+        // Si no, crear un nuevo programa por defecto
+        await createProgram({ ...formData, countryId: formData.country });
+      }
 
       setSuccess(true);
-      setFormData({ name: '', country: '', participants: '', startDate: '', endDate: '' });
+      setFormData(initialData);
 
       router.push('/admin/programs'); // Redirige a la lista de programas
     } catch (err: any) {
@@ -77,7 +91,7 @@ export default function CreateProgramForm() {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      {success && <p className="text-green-500">Programa creado con éxito.</p>}
+      {success && <p className="text-green-500">Operación exitosa.</p>}
 
       <div>
         <label htmlFor="name" className="block text-sm font-medium text-gray-700">
@@ -97,7 +111,7 @@ export default function CreateProgramForm() {
         <label htmlFor="country" className="block text-sm font-medium text-gray-700">
           País *
         </label>
-          <CountrySelect onSelect={handleCountrySelect} />        
+          <CountrySelect onSelect={handleCountrySelect} initialValue={formData.country}/>        
         {errors.country && <p className="text-red-500">{errors.country}</p>}
       </div>
 
@@ -105,7 +119,7 @@ export default function CreateProgramForm() {
         <label htmlFor="participants" className="block text-sm font-medium text-gray-700">
           Participantes (se pueden añadir mas tarde)
         </label>
-        <ParticipantSelect onSelect={handleParticipantsSelect} />
+        <ParticipantSelect onSelect={handleParticipantsSelect} initialParticipants={formData.participants} />
         {errors.participants && <p className="text-red-500">{errors.participants}</p>}
       </div>
 
@@ -141,7 +155,7 @@ export default function CreateProgramForm() {
         type="submit"
         className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
       >
-        Crear Programa
+        {onSubmit ? 'Guardar Cambios' : 'Crear Programa'}
       </button>
     </form>
   );

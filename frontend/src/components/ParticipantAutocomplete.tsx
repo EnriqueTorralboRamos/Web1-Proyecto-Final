@@ -8,11 +8,17 @@ import { getParticipants } from '@/src/services/userServiceClient';
 
 interface ParticipantAutocompleteProps {
   onSelect: (selectedIds: string[]) => void;
+  initialParticipants?: string[]; // Valores iniciales
 }
 
-export default function ParticipantAutocomplete({ onSelect }: Readonly<ParticipantAutocompleteProps>) {
-  const [users, setUsers] = useState<{ _id: string; name: string; email:string; }[]>([]);
-  const [selectedUsers, setSelectedUsers] = useState<{ _id: string; name: string; email:string}[]>([]);
+export default function ParticipantAutocomplete({
+  onSelect,
+  initialParticipants = [],
+}: Readonly<ParticipantAutocompleteProps>) {
+  const [users, setUsers] = useState<{ _id: string; name: string; email: string }[]>([]);
+  const [selectedUsers, setSelectedUsers] = useState<{ _id: string; name: string; email: string }[]>(
+    []
+  );
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -20,6 +26,13 @@ export default function ParticipantAutocomplete({ onSelect }: Readonly<Participa
       try {
         const fetchedUsers = await getParticipants();
         setUsers(fetchedUsers);
+
+        // Seleccionar automáticamente los usuarios iniciales
+        const initialSelection = fetchedUsers.filter((user: { _id: string; name: string; email: string }) =>
+          initialParticipants.includes(user._id)
+        );
+        setSelectedUsers(initialSelection);
+        onSelect(initialParticipants); // Enviar los IDs iniciales
       } catch (error) {
         console.error('Error al cargar los usuarios:', error);
       } finally {
@@ -30,9 +43,9 @@ export default function ParticipantAutocomplete({ onSelect }: Readonly<Participa
     fetchUsers();
   }, []);
 
-  const handleChange = (event: any, value: { _id: string; name: string; email:string}[]) => {
+  const handleChange = (event: any, value: { _id: string; name: string; email: string }[]) => {
     setSelectedUsers(value);
-    onSelect(value.map((user) => user._id)); // Devuelve solo los IDs seleccionados
+    onSelect(value.map((user) => user._id)); // Enviar solo los IDs seleccionados
   };
 
   return (
