@@ -5,6 +5,40 @@ import { calculateProgramStatus } from "../helpers/programHelpers";
 import User from "../models/User";
 import mongoose from "mongoose";
 
+interface SearchProgramsParams {
+    name?: string;
+    status?: string;
+    country?: string;
+    startDate?: Date;
+    endDate?: Date;
+  }
+  
+  export const searchPrograms = async (filters: SearchProgramsParams) => {
+    const query: any = {};
+  
+    // Añadir filtros dinámicamente al query
+    if (filters.name) {
+        console.log("name filter",filters.name);
+        
+      query.name = { $regex: filters.name, $options: 'i' }; // Búsqueda por nombre (case insensitive)
+    }
+    if (filters.status) {
+      query.status = filters.status;
+    }
+    if (filters.country) {
+      query.country = filters.country;
+    }
+    if (filters.startDate) {
+      query.startDate = { $gte: filters.startDate }; // Programas que inician desde esta fecha
+    }
+    if (filters.endDate) {
+      query.endDate = { $lte: filters.endDate }; // Programas que terminan antes de esta fecha
+    }
+  
+    // Ejecutar la consulta y devolver los resultados
+    return await Program.find(query).populate('country participants');
+  };
+
 export const createProgram = async (
     name: string,
     countryId: string,

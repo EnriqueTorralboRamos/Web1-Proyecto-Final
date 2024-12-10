@@ -2,15 +2,20 @@
 
 import { useEffect, useState } from 'react';
 import { getCountries } from '@/src/services/country/countryServiceClient';
+import clsx from 'clsx';
 
 interface CountrySelectProps {
   onSelect: (countryId: string) => void;
   initialValue?: string; // ID inicial del país
+  className?: string; // Clases CSS adicionales
+  clsxB?: boolean; // Clases CSS adicionales
 }
 
 export default function CountrySelect({ 
   onSelect,
   initialValue='',
+  className,
+  clsxB
 }: Readonly<CountrySelectProps>) {
   const [countries, setCountries] = useState<{ _id: string; name: string }[] | null>(null);
   const [loading, setLoading] = useState(true);
@@ -47,13 +52,22 @@ export default function CountrySelect({
   if (!countries) {
     return <p>Error al cargar países.</p>;
   }
+  let defaultClassName = "mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm";
+  if (className) {
+    defaultClassName = clsxB ? clsx(
+      "mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm",
+      className) : className;
+  }
+  
+  
+    
 
   return (
     <select
       value={selectedCountry}
       onChange={handleChange}
-      className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-    >
+      className={ defaultClassName }
+      >
       <option value="">Selecciona un país</option>
       {countries.map((country) => (
         <option key={country._id} value={country._id}>

@@ -1,6 +1,31 @@
 import { Request, Response } from 'express';
 import * as programService from '../services/programService';
 
+export const searchPrograms = async (req: Request, res: Response) => {
+  try {
+    console.log("searchPrograms",req.query);
+    console.log("searchPrograms body",req.body);
+    
+    
+    // Recuperar los parámetros de búsqueda de la solicitud
+    const { name, status, country, startDate, endDate } = req.query;
+
+    // Llamar al servicio de búsqueda con los filtros
+    const programs = await programService.searchPrograms({
+      name: name as string,
+      status: status as string,
+      country: country as string,
+      startDate: startDate ? new Date(startDate as string) : undefined,
+      endDate: endDate ? new Date(endDate as string) : undefined,
+    });
+
+    res.status(200).json(programs);
+  } catch (error: any) {
+    console.error(error);
+    res.status(500).json({ message: error.message || 'Error al buscar programas' });
+  }
+};
+
 export const createProgram = async (req: Request, res: Response) => {
   try {
     const { name, countryId, participants,startDate, endDate } = req.body;

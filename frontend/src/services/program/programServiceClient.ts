@@ -31,3 +31,7 @@ export const updateProgram = async (id: string, data: any) => {
   const response = await axiosInstance.put(`/programs/${id}`, data);
   return response.data;
 };
+export const deleteProgram = async (id: string) => {
+  const response = await axiosInstance.delete(`/programs/${id}`);
+  return response.data;
+}
