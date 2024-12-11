@@ -68,6 +68,8 @@ export const updateProgram = async (req: Request, res: Response) => {
     res.status(200).json(program);
   } catch (error: any) {
     console.error(error);
+    console.log('error.message',error.message,req.body);
+    
     if (error.message === 'Programa no encontrado') {
       res.status(404).json({ message: error.message });
     }else if(error.message === 'No se puede modificar el programa porque existen participantes asociados'){

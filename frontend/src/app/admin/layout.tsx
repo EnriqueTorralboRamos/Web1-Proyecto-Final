@@ -8,7 +8,7 @@ export default function AdminLayout({
   }>) {
     return (
       <PrivateRoute>
-        <div className="flex h-screen">
+        <div className="flex flex-col md:flex-row h-screen ">
         {/* Barra lateral */}
         <Sidenav />
         {/* Contenido principal */}

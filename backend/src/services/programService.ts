@@ -100,7 +100,10 @@ export const updateProgram = async (
     if (!country) {
         throw new Error('País no encontrado');
     }
-    if (program.participants.length > 0) {
+    console.log('program.country',program.country.toString());
+    console.log('country.id',country.id);
+    
+    if (program.country.toString()!==country.id && program.participants.length > 0) {
         throw new Error('No se puede modificar el programa porque existen participantes asociados');
     }
     if (participants) {
@@ -108,7 +111,10 @@ export const updateProgram = async (
         if (validParticipants.length !== participants.length) {
             throw new Error('Algunos participantes no son válidos');
         }
+        console.log('validParticipants',validParticipants);        
         program.participants = validParticipants.map(user => user._id as mongoose.Types.ObjectId);
+        console.log('program.participants post save',program.participants);
+        
     }
 
     if (countryId) program.country = country._id as mongoose.Types.ObjectId;

@@ -8,6 +8,8 @@ import { useState } from "react";
 import { deleteProgram } from '@/src/services/program/programServiceClient';
 import { MdDeleteOutline } from "react-icons/md";
 import { useRouter } from 'next/navigation';
+import { CiEdit } from "react-icons/ci";
+
 
 
 interface Program {
@@ -54,18 +56,24 @@ export default function ProgramsTableContent({ programs }: { readonly programs: 
     <div>
       {error && <p className="text-red-500 mb-4">{error}</p>}
       <Table
-      columns={[ 'Nombre', 'Inicio', 'Fin', 'Estado','Más Info']}
+      columns={[ 'Nombre', 'Pais', 'Inicio', 'Fin', 'Estado','Más Info']}
       data={programs}
       renderRow={(program) => (
         <>
-          <td>{program.name}</td>
-          <td>{new Date(program.startDate).toLocaleDateString()}</td>
-          <td>{new Date(program.endDate).toLocaleDateString()}</td>
-          <td>{status(program)}</td>
-          <td className="text-center flex justify-center items-center gap-4">
+          <td className='px-6  text-base lg:text-sm max-w-[300px] lg:max-w-[200px] xl:max-w-[150px] truncate'>{program.name}</td>
+          <td className='px-6  text-base lg:text-sm'>{program.country?.name}</td>
+          <td className='px-6  text-base lg:text-sm'>{new Date(program.startDate).toLocaleDateString()}</td>
+          <td className='px-6  text-base lg:text-sm'>{new Date(program.endDate).toLocaleDateString()}</td>
+          <td className='px-6  text-base lg:text-sm'>{status(program)}</td>
+          <td className="text-center flex justify-left items-center gap-4 px-6 ">
             {/* Enlace al detalle */}
             <Link href={`/admin/programs/${program._id}`}>
               <CgDetailsMore className="cursor-pointer text-lg hover:text-blue-600" />
+            </Link>
+
+            {/* Enlace a editar */}
+            <Link href={`/admin/programs/${program._id}/edit`}>
+              <CiEdit  className="cursor-pointer text-lg hover:text-blue-600" />
             </Link>
 
             {/* Botón de eliminar */}
