@@ -13,7 +13,6 @@ import { authenticateToken, isAdmin, canAccessUser } from '../middleware/authMid
 
 const router = Router();
 
-
 router.route('/search')
 .get(authenticateToken, searchPrograms); // Permitir que cualquier usuario vea los programas
 

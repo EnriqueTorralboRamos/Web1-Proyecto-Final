@@ -1,8 +1,37 @@
 import bcrypt from 'bcrypt';
-import User from '../models/User';
 import mongoose from '../config/mongoose';
 import UserRoles from '../enum/userRoles';
-import { IUser } from '../models/User';
+import User,{ IUser } from '../models/User';
+
+
+interface IUserFilter {
+  name?: string;
+  email?: string;
+  role?: string;
+  deleted?: string;
+}
+
+export const searchUsers = async (filters: IUserFilter) => {
+  const query: any = {};
+
+  console.log('filters',filters);
+  
+  if (filters.name) {
+    query.name = { $regex: filters.name, $options: 'i' };
+  }
+  if (filters.email) {
+    query.email = { $regex: filters.email, $options: 'i' };
+  }
+  if (filters.role) {
+    query.role = filters.role;
+  }
+  if (filters.deleted === 'true') {
+    console.log('deleted enter');
+    
+    return await User.find({ ...query, deletedAt: { $ne: null } });
+  }
+  return await findUserActive(query);
+}
 
 export const findUserActive = async (filter: object) => {  //soft delete
   // Busca usuarios activos según el filtro recibido

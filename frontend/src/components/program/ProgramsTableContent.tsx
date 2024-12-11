@@ -35,7 +35,7 @@ export default function ProgramsTableContent({ programs }: { readonly programs: 
     return 'Desconocido';
   }
   const handleDelete = (id: string,name:string) => async () => {
-    if(confirm(`¿Estás seguro de que deseas eliminar este país? ${name}`)) {
+    if(confirm(`¿Estás seguro de que deseas eliminar este programa? ${name}`)) {
         setLoadingId(id);
         setError(null);
         try {
@@ -51,7 +51,7 @@ export default function ProgramsTableContent({ programs }: { readonly programs: 
             
         }
     }
-};
+  };
   return (
     <div>
       {error && <p className="text-red-500 mb-4">{error}</p>}

@@ -2,7 +2,7 @@ import { Suspense } from 'react';
 import SkeletonTable from '@/src/components/skeletons/SkeletonTable';
 import ProgramsTable from '@/src/components/program/ProgramsTable';
 import Link from 'next/link';
-import Search from '@/src/components/program/SearchProgram';
+import SearchTools from '@/src/components/program/ProgramFiltersToolbar';
 import { ISearchProgramParams } from '@/src/constants/searchProgramParams';
 
 export default async function ProgramsPage(props: Readonly<{
@@ -27,7 +27,7 @@ export default async function ProgramsPage(props: Readonly<{
           Crear programa
         </Link>
       </div>
-      <Search />
+      <SearchTools />
       <Suspense fallback={<SkeletonTable rows={5} columns={4} />}>
         <ProgramsTable
           filters={{ name, status, country, startDate, endDate, page }}

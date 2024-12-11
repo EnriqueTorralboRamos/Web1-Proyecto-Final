@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { createProgram } from '@/src/services/program/programServiceClient';
-import { programSchema } from '../../../../schemas/programSchema';
+import { programSchema } from '../../schemas/programSchema';
 import { z } from 'zod';
 import CountrySelect from '@/src/components/country/CountrySelect';
 import ParticipantSelect from '@/src/components/program/ParticipantAutocomplete';

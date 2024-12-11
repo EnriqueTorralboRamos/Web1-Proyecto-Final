@@ -2,17 +2,11 @@ import ProgramsTableContent from './ProgramsTableContent';
 import { getPrograms } from '../../services/program/programServiceServer';
 import SkeletonTable from '../skeletons/SkeletonTable';
 import LoadingErrorCacther from '../temp-middleware-solution/LoadingErrorCatcher';
-
+import {ISearchProgramParams} from '../../constants/searchProgramParams';
 interface ProgramsTableProps {
-    filters: {
-      name?: string;
-      status?: string;
-      country?: string;
-      startDate?: string;
-      endDate?: string;
-      page?: number;
+    filters: ISearchProgramParams;
     };
-  }
+  
 
 export default async function ProgramsTable(
     { filters }: Readonly<ProgramsTableProps>

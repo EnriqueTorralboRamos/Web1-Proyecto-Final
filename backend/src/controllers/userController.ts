@@ -1,6 +1,24 @@
 import { Request, Response } from 'express';
 import * as userService from '../services/userService';
 
+export const searchUsers = async (req: Request, res: Response) => {
+  try {
+    const { name, email, role,deleted} = req.query;
+    console.log('req.query',req.query);
+    
+    const users = await userService.searchUsers({
+      name: name as string,
+      email: email as string,
+      role: role as string,
+      deleted: deleted as string,
+    });
+    res.status(200).json(users);
+  } catch (error: any) {
+    console.error(error);
+    res.status(500).json({ message: error.message || 'Error al buscar usuarios' });
+  }
+}
+
 export const createUser = async (req: Request, res: Response) => {
   try {
     const { name, email, password, role } = req.body;
@@ -29,9 +47,7 @@ export const updateUser = async (req: Request, res: Response) => {
       res.status(400).json({ message: error.message });
     } else if (error.message === 'Usuario no encontrado') {
       res.status(404).json({ message: error.message });
-    }else if (error.message.startsWith('El email')) {
-      res.status(400).json({ message: error.message });
-    } else {
+    }else {
       res.status(500).json({ message: 'Error al actualizar el usuario' });
     }
   }
