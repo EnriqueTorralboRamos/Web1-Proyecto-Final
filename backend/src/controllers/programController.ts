@@ -2,10 +2,7 @@ import { Request, Response } from 'express';
 import * as programService from '../services/programService';
 
 export const searchPrograms = async (req: Request, res: Response) => {
-  try {
-    console.log("searchPrograms",req.query);
-    console.log("searchPrograms body",req.body);
-    
+  try {    
     
     // Recuperar los parámetros de búsqueda de la solicitud
     const { name, status, country, startDate, endDate } = req.query;
@@ -65,14 +62,21 @@ export const getProgramById = async (req: Request, res: Response) => {
 export const updateProgram = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
-    const { name, startDate, endDate } = req.body;
-    const program = await programService.updateProgram(id, name, startDate, endDate);
+    const { name, startDate, endDate, participants,countryId  } = req.body;
+    
+    const program = await programService.updateProgram(id, name, startDate, endDate, countryId, participants);
     res.status(200).json(program);
   } catch (error: any) {
     console.error(error);
     if (error.message === 'Programa no encontrado') {
       res.status(404).json({ message: error.message });
-    } else {
+    }else if(error.message === 'No se puede modificar el programa porque existen participantes asociados'){
+      res.status(400).json({ message: error.message });
+    }else if(error.message === 'Algunos participantes no son válidos'){
+      res.status(400).json({ message: error.message });
+    }else if(error.message === 'País no encontrado'){
+      res.status(400).json({ message: error.message });
+    }else {
       res.status(500).json({ message: 'Error al actualizar el programa' });
     }
   }

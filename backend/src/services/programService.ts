@@ -17,9 +17,7 @@ interface SearchProgramsParams {
     const query: any = {};
   
     // Añadir filtros dinámicamente al query
-    if (filters.name) {
-        console.log("name filter",filters.name);
-        
+    if (filters.name) {        
       query.name = { $regex: filters.name, $options: 'i' }; // Búsqueda por nombre (case insensitive)
     }
     if (filters.status) {
@@ -88,12 +86,32 @@ export const updateProgram = async (
     programId: string,
     name?: string,
     startDate?: Date,
-    endDate?: Date
+    endDate?: Date,
+    countryId?: string,
+    participants?: string[],
 ) => {
     const program = await Program.findById(programId);
     if (!program) {
         throw new Error('Programa no encontrado');
     }
+    
+    const country = await Country.findById(countryId);
+    
+    if (!country) {
+        throw new Error('País no encontrado');
+    }
+    if (program.participants.length > 0) {
+        throw new Error('No se puede modificar el programa porque existen participantes asociados');
+    }
+    if (participants) {
+        const validParticipants = await User.find({ _id: { $in: participants } });
+        if (validParticipants.length !== participants.length) {
+            throw new Error('Algunos participantes no son válidos');
+        }
+        program.participants = validParticipants.map(user => user._id as mongoose.Types.ObjectId);
+    }
+
+    if (countryId) program.country = country._id as mongoose.Types.ObjectId;
     if (name) program.name = name;
     if (startDate) program.startDate = startDate;
     if (endDate) program.endDate = endDate;

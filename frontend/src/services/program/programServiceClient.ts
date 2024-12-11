@@ -27,7 +27,7 @@ export async function getProgramById(programId: string) {
     throw new Error(error.response?.data?.message || 'Error al obtener el programa');
   }
 }
-export const updateProgram = async (id: string, data: any) => {
+export const updateProgram = async (id: string, data: ProgramPayload) => {
   const response = await axiosInstance.put(`/programs/${id}`, data);
   return response.data;
 };

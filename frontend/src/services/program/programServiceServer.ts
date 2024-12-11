@@ -1,7 +1,6 @@
 import axiosServerInstance from '../axiosServerInstance';
 
 export const getPrograms = async (filters: Record<string, string | undefined>) => {
-  console.log('filters', filters);
   const response = await axiosServerInstance.get('/programs/search',{params: filters});
   return response.data; // Devuelve la lista de programas
 };

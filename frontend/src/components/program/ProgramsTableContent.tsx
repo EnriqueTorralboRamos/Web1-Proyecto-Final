@@ -7,6 +7,7 @@ import ProgramStatus from '@/src/constants/programStatus';
 import { useState } from "react";
 import { deleteProgram } from '@/src/services/program/programServiceClient';
 import { MdDeleteOutline } from "react-icons/md";
+import { useRouter } from 'next/navigation';
 
 
 interface Program {
@@ -22,7 +23,8 @@ interface Program {
 export default function ProgramsTableContent({ programs }: { readonly programs: ReadonlyArray<Program> }) {
   const [loadingId, setLoadingId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [programsState, setProgramsState] = useState(programs);
+  const router = useRouter();
+
 
   const status = (program: Program) => { // Función para obtener el estado del programa
     if (program.status === ProgramStatus.PENDING) return 'Pendiente';
@@ -37,17 +39,21 @@ export default function ProgramsTableContent({ programs }: { readonly programs: 
         try {
             await deleteProgram(id);
             
-            setProgramsState(programs.filter((program) => program._id !== id));
         } catch (error:any) {
             console.error('Error al eliminar el programa ',error);
             setError(error.response?.data?.message || 'Error al eliminar el programa');
         } finally {
             setLoadingId(null);
+            router.refresh();
+
+            
         }
     }
 };
   return (
-    <Table
+    <div>
+      {error && <p className="text-red-500 mb-4">{error}</p>}
+      <Table
       columns={[ 'Nombre', 'Inicio', 'Fin', 'Estado','Más Info']}
       data={programs}
       renderRow={(program) => (
@@ -64,7 +70,7 @@ export default function ProgramsTableContent({ programs }: { readonly programs: 
 
             {/* Botón de eliminar */}
             <MdDeleteOutline
-              onClick={() => handleDelete(program._id, program.name)}
+              onClick={handleDelete(program._id, program.name)}
               className={`cursor-pointer ${
                 loadingId === program._id ? 'text-gray-400' : 'hover:text-red-500'
               }`}
@@ -73,5 +79,7 @@ export default function ProgramsTableContent({ programs }: { readonly programs: 
         </>
       )}
     />
+    </div>
+    
   );
 }

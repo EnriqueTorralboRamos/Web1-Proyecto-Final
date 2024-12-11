@@ -48,11 +48,11 @@ export default function EditProgramPage() {
   }) => {
     try {
       if (id) {
-        await updateProgram(Array.isArray(id) ? id[0] : id, values);
+        await updateProgram(Array.isArray(id) ? id[0] : id, { ...values, countryId: values.country });
+        //router.push('/admin/programs');
       } else {
         setError('ID del programa no está disponible.');
       }
-      router.push('/admin/programs');
     } catch (err) {
       console.error('Error al actualizar el programa:', err);
       setError('No se pudo actualizar el programa.');
@@ -65,7 +65,7 @@ export default function EditProgramPage() {
   return (
     <div className="container mx-auto mt-10">
       <h1 className="text-2xl font-bold mb-4">Editar Programa</h1>
-      {program &&<ProgramForm initialData={program} onSubmit={handleSubmit} />}
+      {program && <ProgramForm initialData={program} onSubmit={handleSubmit} />}
     </div>
   );
 }

@@ -31,8 +31,6 @@ export default function LoginForm() {
         sameSite: 'Strict' // Previene ataques CSRF
       });
 
-      alert('Inicio de sesión exitoso');
-
       router.push('/admin'); // Redirigir al usuario a la página principal
     } catch(err:any) {
       if (err.response && err.response.status === 401) {

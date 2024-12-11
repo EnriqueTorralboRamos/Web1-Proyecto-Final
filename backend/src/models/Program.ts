@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 
 interface IProgram extends Document {
     name: string; // Nombre del programa
-    country: Schema.Types.ObjectId; // Relación con el país
+    country: mongoose.Types.ObjectId; // Relación con el país
     participants: mongoose.Types.ObjectId[]; // Array de referencias a usuarios
     startDate: Date;
     endDate: Date;
