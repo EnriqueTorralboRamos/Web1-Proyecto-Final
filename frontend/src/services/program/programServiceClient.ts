@@ -42,3 +42,8 @@ export const deleteProgram = async (id: string) => {
   const response = await axiosInstance.delete(`/programs/${id}`);
   return response.data;
 }
+
+export const removeParticipantFromProgram = async (programId: string, userId: string) => {
+  const response = await axiosInstance.delete(`/programs/participants`,{data:{programId,userId}});
+  return response.data;
+}

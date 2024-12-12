@@ -13,3 +13,8 @@ export async function getProgramById(programId: string) {
     throw new Error(error.response?.data?.message || 'Error al obtener el programa');
   }
 }
+
+export const getProgramByUserId = async (userId: string) => {
+  const response = await axiosServerInstance.get(`/programs/participants/${userId}`);
+  return response.data;
+}

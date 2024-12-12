@@ -2,9 +2,10 @@
 import { getUserById } from '@/src/services/users/userServiceServer';
 import Link from 'next/link';
 
-export default async function UserDetailsServer({ userId }: { userId: string }) {
-  const user = await getUserById(userId);
 
+export default async function UserDetailsServer({ userId }: Readonly<{ userId: string }>) {
+  const user = await getUserById(userId);
+  
   if (!user) {
     return <div>No se encontró el usuario.</div>;
   }
