@@ -8,11 +8,11 @@ export default function AdminLayout({
   }>) {
     return (
       <PrivateRoute>
-        <div className="flex flex-col md:flex-row h-screen ">
+        <div className="flex flex-col md:flex-row overflow-hidden h-screen ">
         {/* Barra lateral */}
         <Sidenav />
         {/* Contenido principal */}
-        <main className="flex-1 p-6 bg-gray-100">
+        <main className="flex-1 p-6 overflow-auto bg-gray-100">
           {children}
         </main>
       </div>

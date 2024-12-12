@@ -60,11 +60,11 @@ export default function ProgramsTableContent({ programs }: { readonly programs: 
       data={programs}
       renderRow={(program) => (
         <>
-          <td className='px-6  text-base lg:text-sm max-w-[300px] lg:max-w-[200px] xl:max-w-[150px] truncate'>{program.name}</td>
-          <td className='px-6  text-base lg:text-sm'>{program.country?.name}</td>
-          <td className='px-6  text-base lg:text-sm'>{new Date(program.startDate).toLocaleDateString()}</td>
-          <td className='px-6  text-base lg:text-sm'>{new Date(program.endDate).toLocaleDateString()}</td>
-          <td className='px-6  text-base lg:text-sm'>{status(program)}</td>
+          <td className='px-6  md:text-base text-sm max-w-[300px] lg:max-w-[200px] xl:max-w-[150px] truncate'>{program.name}</td>
+          <td className='px-6  md:text-base text-sm'>{program.country?.name}</td>
+          <td className='px-6  md:text-base text-sm'>{new Date(program.startDate).toLocaleDateString()}</td>
+          <td className='px-6  md:text-base text-sm'>{new Date(program.endDate).toLocaleDateString()}</td>
+          <td className='px-6  md:text-base text-sm'>{status(program)}</td>
           <td className="text-center flex justify-left items-center gap-4 px-6 ">
             {/* Enlace al detalle */}
             <Link href={`/admin/programs/${program._id}`}>
