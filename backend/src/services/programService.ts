@@ -184,3 +184,19 @@ export const removeParticipant = async (programId: string, userId: string) => {
     );
     return await program.save();
 }
+
+export const getByParticipant = async (userId: string) => {
+    console.log('userId',userId);
+    
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
+        throw new Error(`ID de usuario inválido: ${userId}`);
+    }
+    console.log('userId',userId);
+    
+    const user = await User.findById(userId);
+    if (!user) {
+        throw new Error('Usuario no encontrado');
+    }
+    const userObjectId = new mongoose.Types.ObjectId(userId);
+    return await Program.find({ participants: userObjectId }).populate('country participants');
+}

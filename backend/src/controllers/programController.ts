@@ -122,3 +122,16 @@ export const removeParticipant = async (req: Request, res: Response) => {
     res.status(500).json({ message: error.message || 'Error al eliminar participante' });
   }
 };
+
+export const getByParticipant = async (req: Request, res: Response) => {
+  try {
+    console.log('req.params',req.params);
+    
+    const { id } = req.params;
+    const programs = await programService.getByParticipant(id);
+    res.status(200).json(programs);
+  } catch (error: any) {
+    console.error(error);
+    res.status(500).json({ message: 'Error al obtener los programas' });
+  }
+}

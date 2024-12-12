@@ -7,7 +7,8 @@ import {
   deleteProgram,
   addParticipant,
   removeParticipant,
-  searchPrograms
+  searchPrograms,
+  getByParticipant
 } from '../controllers/programController';
 import { authenticateToken, isAdmin, canAccessUser } from '../middleware/authMiddleware';
 
@@ -19,6 +20,9 @@ router.route('/search')
 router.route('/participants')
 .post(authenticateToken, isAdmin, addParticipant) // Solo admin puede añadir participantes
 .delete(authenticateToken, isAdmin, removeParticipant); // Admin puede eliminar participantes
+
+router.route('/participants/:id')
+.get(authenticateToken, canAccessUser, getByParticipant ); // Permitir que cualquier usuario vea los programas
 
 router.route('/:id')
 .get(authenticateToken, getProgramById) // Permitir que cualquier usuario vea detalles del programa
