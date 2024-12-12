@@ -11,6 +11,8 @@ export default async function UsersTable({ filters }: Readonly<UsersTableProps>)
         const users = await getUsers({...filters,page:filters.page?.toString()}); // Obtiene datos en el servidor
         return <UserTableContent users={users} deleted={filters.deleted}/>;
     } catch (error) {
+        console.log('Error al cargar los usuarios:', error);
+        
         return <LoadingErrorCacther><SkeletonTable rows={5} columns={4} /></LoadingErrorCacther>
     }
 }

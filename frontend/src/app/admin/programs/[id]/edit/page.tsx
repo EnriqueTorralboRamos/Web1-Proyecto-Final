@@ -11,7 +11,13 @@ import LoadingErrorCacther from '@/src/components/temp-middleware-solution/Loadi
 export default function EditProgramPage() {
   const { id } = useParams(); // Desempaqueta params.id correctamente
   const router = useRouter();
-  const [program, setProgram] = useState<any>(null);
+  const [program, setProgram] = useState<{
+    name: string;
+    country: string;
+    participants: string[];
+    startDate: string;
+    endDate: string;
+  } | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -24,7 +30,7 @@ export default function EditProgramPage() {
         setProgram({
           name: data.name,
           country: data.country._id,
-          participants: data.participants.map((p: any) => p._id),
+          participants: data.participants.map((p: { _id: string }) => p._id),
           startDate: data.startDate,
           endDate: data.endDate,
         });

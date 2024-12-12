@@ -3,8 +3,9 @@ import { getProgramById } from '@/src/services/program/programServiceServer';
 import { format } from 'date-fns';
 import Link from 'next/link';
 
-export default async function ProgramDetailsServer({ programId }: { programId: string }) {
-  const program = await getProgramById(programId);
+export default async function ProgramDetailsServer({ programId }: Readonly<{ programId: string }>) {
+  const id = await Promise.resolve(programId);
+  const program = await getProgramById(id);
 
   if (!program) {
     return <div>No se encontró el programa.</div>;

@@ -4,7 +4,7 @@ import Cookies from 'js-cookie';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { BiWorld } from 'react-icons/bi';
-import { FaHome, FaList, FaSignInAlt, FaSignOutAlt, FaUsers } from 'react-icons/fa';
+import { FaHome, FaList, FaSignOutAlt, FaUsers } from 'react-icons/fa';
 
 export default function Sidenav() {
   const router = useRouter();

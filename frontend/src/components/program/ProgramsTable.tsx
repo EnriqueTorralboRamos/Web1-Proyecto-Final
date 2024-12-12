@@ -17,6 +17,8 @@ export default async function ProgramsTable(
         const programs = await getPrograms({ ...filters, page: filters.page?.toString() }); // Obtiene datos en el servidor
         return <ProgramsTableContent programs={programs} />;
     } catch (error) {
+        console.log('Error al cargar los programas:', error);
+        
         return <LoadingErrorCacther><SkeletonTable rows={5} columns={4} /></LoadingErrorCacther>
         
     }
