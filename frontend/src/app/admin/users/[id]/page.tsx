@@ -1,4 +1,4 @@
-'use client';
+/*'use client';
 
 import {useRouter} from 'next/navigation';
 
@@ -13,4 +13,24 @@ export default function Page() {
           </button>
         </div>
     );
-}
+}*/
+
+import ProgramDetails from '@/src/components/program/ProgramDetails';
+import ProgramFormSkeleton from '@/src/components/skeletons/ProgramFormSkeleton';
+import LoadingErrorCacther from '@/src/components/temp-middleware-solution/LoadingErrorCatcher';
+import { Suspense } from 'react';
+import UserDetails from '@/src/components/users/UserDetails';
+
+export default async function ProgramDetailsPage({ params }: Readonly<{ params: { id: string } }>) {
+    const { id } = await Promise.resolve(params);
+    return (
+      <div className="container mx-auto mt-10">
+        <Suspense fallback={<LoadingErrorCacther><ProgramFormSkeleton /></LoadingErrorCacther>}>
+  
+          <UserDetails userId={id} />
+        </Suspense>
+        
+        
+      </div>
+    );
+  }
