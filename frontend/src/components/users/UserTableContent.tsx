@@ -26,7 +26,6 @@ export default function UsersTableContent({ users,deleted }: Readonly<UserTableC
     const [error, setError] = useState<string | null>(null);
     const [success, setSuccess] = useState<string | null>(null);
     const router = useRouter();
-    console.log('deleted',deleted);
     const handleDelete = (id: string,name:string) => async () => {
         if(confirm(`¿Estás seguro de que deseas eliminar este usuario? ${name}`)) {
             setLoadingId(id);

@@ -100,9 +100,6 @@ export const updateProgram = async (
     if (!country) {
         throw new Error('País no encontrado');
     }
-    console.log('program.country',program.country.toString());
-    console.log('country.id',country.id);
-    
     if (program.country.toString()!==country.id && program.participants.length > 0) {
         throw new Error('No se puede modificar el programa porque existen participantes asociados');
     }
@@ -110,11 +107,8 @@ export const updateProgram = async (
         const validParticipants = await User.find({ _id: { $in: participants } });
         if (validParticipants.length !== participants.length) {
             throw new Error('Algunos participantes no son válidos');
-        }
-        console.log('validParticipants',validParticipants);        
-        program.participants = validParticipants.map(user => user._id as mongoose.Types.ObjectId);
-        console.log('program.participants post save',program.participants);
-        
+        }     
+        program.participants = validParticipants.map(user => user._id as mongoose.Types.ObjectId);        
     }
 
     if (countryId) program.country = country._id as mongoose.Types.ObjectId;
@@ -186,12 +180,10 @@ export const removeParticipant = async (programId: string, userId: string) => {
 }
 
 export const getByParticipant = async (userId: string) => {
-    console.log('userId',userId);
-    
+
     if (!mongoose.Types.ObjectId.isValid(userId)) {
         throw new Error(`ID de usuario inválido: ${userId}`);
     }
-    console.log('userId',userId);
     
     const user = await User.findById(userId);
     if (!user) {

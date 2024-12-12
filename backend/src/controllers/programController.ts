@@ -125,8 +125,6 @@ export const removeParticipant = async (req: Request, res: Response) => {
 
 export const getByParticipant = async (req: Request, res: Response) => {
   try {
-    console.log('req.params',req.params);
-    
     const { id } = req.params;
     const programs = await programService.getByParticipant(id);
     res.status(200).json(programs);

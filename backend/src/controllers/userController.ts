@@ -4,7 +4,6 @@ import * as userService from '../services/userService';
 export const searchUsers = async (req: Request, res: Response) => {
   try {
     const { name, email, role,deleted} = req.query;
-    console.log('req.query',req.query);
     
     const users = await userService.searchUsers({
       name: name as string,
@@ -22,7 +21,6 @@ export const searchUsers = async (req: Request, res: Response) => {
 export const createUser = async (req: Request, res: Response) => {
   try {
     const { name, email, password, role } = req.body;
-    console.log(req.body);
     
     const newUser = await userService.createUser(name, email, password,role);
     res.status(201).json(newUser);

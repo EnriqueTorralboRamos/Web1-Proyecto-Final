@@ -32,7 +32,6 @@ export async function getUserById(userId: string) {
 }
 
 export const updateUser = async ( payload: UserPayload) => {
-  console.log(payload);
   const response = await axiosInstance.put(`/users`, payload);
   return response.data;
 };

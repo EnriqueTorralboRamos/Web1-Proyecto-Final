@@ -13,8 +13,6 @@ interface IUserFilter {
 
 export const searchUsers = async (filters: IUserFilter) => {
   const query: any = {};
-
-  console.log('filters',filters);
   
   if (filters.name) {
     query.name = { $regex: filters.name, $options: 'i' };
@@ -25,9 +23,7 @@ export const searchUsers = async (filters: IUserFilter) => {
   if (filters.role) {
     query.role = filters.role;
   }
-  if (filters.deleted === 'true') {
-    console.log('deleted enter');
-    
+  if (filters.deleted === 'true') {    
     return await User.find({ ...query, deletedAt: { $ne: null } });
   }
   return await findUserActive(query);
