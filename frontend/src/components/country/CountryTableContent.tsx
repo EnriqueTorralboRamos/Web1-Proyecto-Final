@@ -44,7 +44,7 @@ export default function CountryTableContent({ countries }: { readonly countries:
                 <>
                     <td className='px-6  md:text-base text-sm max-w-[300px] lg:max-w-[200px] xl:max-w-[150px] truncate'>{country.name}</td>
                     <td className='px-6  md:text-base text-sm'>{country.code}</td>
-                    <td className='px-6  md:text-base text-sm'>{country.population}</td>
+                    <td className='px-6  md:text-base text-sm'>{country.population ? country.population.toLocaleString('es-ES') : 'N/A'}</td>
                     <td className='px-6  md:text-base text-sm'>{country.language}</td>
                     <td className="text-center flex justify-left items-center gap-4 px-6"><MdDeleteOutline onClick={handleDelete(country._id,country.name)}
                         className={`cursor-pointer ${
