@@ -1,4 +1,3 @@
-// src/components/UserDetailsServer.tsx
 import { getUserById } from '@/src/services/users/userServiceServer';
 import Link from 'next/link';
 
