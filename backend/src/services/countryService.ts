@@ -2,6 +2,37 @@ import Country from "../models/Country";
 import Program from "../models/Program";
 
 
+interface SearchCountriesParams {
+    name?: string;
+    code?: string;
+    populationMin?: number;
+    populationMax?: number;
+    language?: string;
+}
+
+export const searchCountries = async (filters: SearchCountriesParams) => {
+    const query: any = {};
+
+    if (filters.name) {
+        query.name = { $regex: filters.name, $options: 'i' };
+    }
+    if (filters.code) {
+        query.code = filters.code;
+    }
+    if (filters.populationMin && filters.populationMax) {
+        query.population = { $gte: filters.populationMin, $lte: filters.populationMax };
+    } else if (filters.populationMin) {
+        query.population = { $gte: filters.populationMin };
+    } else if (filters.populationMax) {
+        query.population = { $lte: filters.populationMax };
+    }
+    if (filters.language) {
+        query.language = filters.language;
+    }
+
+    return await Country.find(query);
+}
+
 export const createCountry = async (
     name: string, 
     code: string, 

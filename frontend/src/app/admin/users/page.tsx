@@ -3,7 +3,7 @@ import UsersTable from "@/src/components/users/UserTable";
 import { Suspense } from "react";
 import Link from 'next/link';
 import SearchTools from '@/src/components/users/UserFiltersToolbar';
-import { ISearchUserParams } from '@/src/constants/searchUserParams';
+import { ISearchUserParams } from '@/src/interfaces/ISearchUserParams';
 
 
 export default async function AdminUsersPage(props: Readonly<{

@@ -3,7 +3,7 @@ import SkeletonTable from '@/src/components/skeletons/SkeletonTable';
 import ProgramsTable from '@/src/components/program/ProgramsTable';
 import Link from 'next/link';
 import SearchTools from '@/src/components/program/ProgramFiltersToolbar';
-import { ISearchProgramParams } from '@/src/constants/searchProgramParams';
+import { ISearchProgramParams } from '@/src/interfaces/ISearchProgramParams';
 
 export default async function ProgramsPage(props: Readonly<{
   searchParams?: Promise<ISearchProgramParams>;

@@ -2,7 +2,7 @@ import ProgramsTableContent from './ProgramsTableContent';
 import { getPrograms } from '../../services/program/programServiceServer';
 import SkeletonTable from '../skeletons/SkeletonTable';
 import LoadingErrorCacther from '../temp-middleware-solution/LoadingErrorCatcher';
-import {ISearchProgramParams} from '../../constants/searchProgramParams';
+import {ISearchProgramParams} from '../../interfaces/ISearchProgramParams';
 interface ProgramsTableProps {
     filters: ISearchProgramParams;
     };

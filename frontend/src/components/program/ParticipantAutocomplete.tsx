@@ -49,30 +49,53 @@ export default function ParticipantAutocomplete({
   };
 
   return (
-    <Autocomplete
-      multiple
-      options={users}
-      getOptionLabel={(option) => option.email}
-      value={selectedUsers}
-      onChange={handleChange}
-      isOptionEqualToValue={(option, value) => option._id === value._id}
-      loading={loading}
-      renderInput={(params) => (
-        <TextField
-          {...params}
-          label="Selecciona Participantes"
-          placeholder="Buscar usuarios"
-          InputProps={{
-            ...params.InputProps,
-            endAdornment: (
-              <>
-                {loading ? <CircularProgress color="inherit" size={20} /> : null}
-                {params.InputProps.endAdornment}
-              </>
-            ),
-          }}
-        />
-      )}
-    />
+    <div className='flex flex-col space-y-2'>
+      <label htmlFor="participants" className="block text-sm font-medium text-gray-700">
+          Participantes (se pueden añadir mas tarde)
+      </label>
+        <Autocomplete
+        id='participants'
+        multiple
+        options={users}
+        getOptionLabel={(option) => option.email}
+        value={selectedUsers}
+        onChange={handleChange}
+        isOptionEqualToValue={(option, value) => option._id === value._id}
+        loading={loading}
+        sx={{
+          '& .MuiOutlinedInput-root': {
+            padding: 0,
+            borderRadius: '0.375rem',
+            backgroundColor: '#ffffff', // Fondo blanco, incluso sin selección
+          },
+          '& .MuiChip-root': {
+            margin: '0.125rem', // Espaciado ajustado para los chips
+          },
+          '& .MuiAutocomplete-tag': {
+            maxWidth: '100%', // Chips no se salen del contenedor
+            whiteSpace: 'nowrap',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+          },
+        }}
+        className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm max-h-40 overflow-y-auto"
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            placeholder="Buscar usuarios"
+            InputProps={{
+              ...params.InputProps,
+              endAdornment: (
+                <>
+                  {loading ? <CircularProgress color="inherit" size={20} /> : null}
+                  {params.InputProps.endAdornment}
+                </>
+              ),
+            }}
+          />
+        )}
+      />
+    </div>
+    
   );
 }

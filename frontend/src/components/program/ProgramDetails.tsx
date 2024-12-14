@@ -2,6 +2,8 @@
 import { getProgramById } from '@/src/services/program/programServiceServer';
 import { format } from 'date-fns';
 import Link from 'next/link';
+import ProgramStatus from '@/src/constants/programStatus';
+
 
 export default async function ProgramDetailsServer({ programId }: Readonly<{ programId: string }>) {
   const id = await Promise.resolve(programId);
@@ -9,6 +11,12 @@ export default async function ProgramDetailsServer({ programId }: Readonly<{ pro
 
   if (!program) {
     return <div>No se encontró el programa.</div>;
+  }
+  const status = (status:string) => { // Función para obtener el estado del programa
+    if (status === ProgramStatus.PENDING) return 'Pendiente';
+    if (status === ProgramStatus.ONGOING) return 'En progreso';
+    if (status === ProgramStatus.COMPLETED) return 'Finalizado';
+    return 'Desconocido';
   }
 
   return (
@@ -23,7 +31,7 @@ export default async function ProgramDetailsServer({ programId }: Readonly<{ pro
         <div>
           <label className="block text-sm font-medium text-gray-700">País</label>
           <p className="mt-1 px-3 py-2 border border-gray-300 rounded-md bg-gray-100">
-            {program.country?.name || 'N/A'}
+            <Link href={`/admin/countries/${program.country._id}`}>{program.country?.name}</Link>
           </p>
         </div>
 
@@ -43,7 +51,7 @@ export default async function ProgramDetailsServer({ programId }: Readonly<{ pro
 
         <div>
           <label className="block text-sm font-medium text-gray-700">Estado</label>
-          <p className="mt-1 px-3 py-2 border border-gray-300 rounded-md bg-gray-100">{program.status}</p>
+          <p className="mt-1 px-3 py-2 border border-gray-300 rounded-md bg-gray-100">{status(program.status)}</p>
         </div>
 
         <div>
@@ -52,7 +60,7 @@ export default async function ProgramDetailsServer({ programId }: Readonly<{ pro
             {program.participants.length > 0 ? (
               program.participants.map((participant: any) => (
                 <li key={participant._id} className="list-disc list-inside">
-                  {participant.name} ({participant.email})
+                  <Link href={`/admin/users/${participant._id}`}>{participant.name} ({participant.email})</Link>
                 </li>
               ))
             ) : (

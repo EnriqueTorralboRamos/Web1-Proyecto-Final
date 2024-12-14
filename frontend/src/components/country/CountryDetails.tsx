@@ -24,7 +24,7 @@ export default async function CountryDetailsServer({countryId}: Readonly<{countr
 
             <div>
             <label className="block text-sm font-medium text-gray-700">Población</label>
-            <p className="mt-1 px-3 py-2 border border-gray-300 rounded-md bg-gray-100">{country.population}</p>
+            <p className="mt-1 px-3 py-2 border border-gray-300 rounded-md bg-gray-100">{country.population ? country.population.toLocaleString('es-ES') : 'N/A'}</p>
             </div>
 
             <div>

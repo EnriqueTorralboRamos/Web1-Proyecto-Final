@@ -1,31 +1,22 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { z } from 'zod';
 import Link from 'next/link';
-import { createUser } from '@/src/services/users/userServiceClient';
-import { UserRoles } from '@/src/constants/userRoles';
-import { Language } from '@mui/icons-material';
 import { createCountry } from '@/src/services/country/countryServiceClient';
+import { countrySchema } from '@/src/schemas/countrySchema';
 
 // Esquema Zod para validación
-const countrySchema = z.object({
-    name: z.string().min(1, 'El nombre es obligatorio'),
-    code: z.string().min(1, 'El código es obligatorio'),
-    population: z.number().int().min(1, 'La población debe ser mayor a 0'),
-    Language: z.string().min(1, 'El idioma es obligatorio'),
-});
+
 interface CountryFormProps {
     initialData?: {
-        _id: string;
         name: string;
         code: string;
         population: number;
         language: string;
     };
     onSubmit?: (values: {
-        _id: string;
         name: string;
         code: string;
         population: number;
@@ -34,7 +25,7 @@ interface CountryFormProps {
 }
 
 export default function CountryForm({
-    initialData = { _id: '', name: '', code: '', population: 0, language: '' },
+    initialData = {  name: '', code: '', population: 0, language: '' },
     onSubmit,
 }: Readonly<CountryFormProps>) {
     const router = useRouter();
@@ -45,10 +36,15 @@ export default function CountryForm({
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { id, value } = e.target;
-        setFormData((prev) => ({ ...prev, [id]: value }));
+        setFormData((prev) => ({
+            ...prev,
+            [id]: id === 'population' ? Number(value) : value, // Convertir a número si es población
+        }));
     };
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        console.log('handleSubmit',formData);
+        
         e.preventDefault();
         setErrors({});
         setSuccess(false);
@@ -60,22 +56,28 @@ export default function CountryForm({
 
             // Enviar datos a la API
             if(onSubmit){
-                await onSubmit?.(formData);
+                await onSubmit(formData);
             }else{
                 await createCountry(formData);
             }
             setSuccess(true);
+            setFormData(initialData);
             router.push('/admin/countries');
         } catch (error: any) {
+            console.log('Error',error);
+            
             if (error instanceof z.ZodError) {
+                console.log('ZodError',error.errors);
+                
                 setErrors(error.errors.reduce((acc, err) => ({ ...acc, [err.path[0]]: err.message }), {}));
             } else {
                 setGlobalError(error.message);
+                console.log('Error',error.message);                
             }
         }
     };
     return (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="space-y-4">
             {success && <p className="text-green-500">Operación exitosa.</p>}
             {globalError && <p className="text-red-500">{globalError}</p>}
 
@@ -86,7 +88,7 @@ export default function CountryForm({
                     type="text"
                     value={formData.name}
                     onChange={handleChange}
-                    className="mt-1 px-3 py-2 border border-gray-300 rounded-md bg-gray-100"
+                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                 />
                 {errors.name && <p className="text-red-500">{errors.name}</p>}
             </div>
@@ -98,7 +100,7 @@ export default function CountryForm({
                     type="text"
                     value={formData.code}
                     onChange={handleChange}
-                    className="mt-1 px-3 py-2 border border-gray-300 rounded-md bg-gray-100"
+                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                 />
                 {errors.code && <p className="text-red-500">{errors.code}</p>}
             </div>
@@ -106,10 +108,19 @@ export default function CountryForm({
                 <label className="block text-sm font-medium text-gray-700">Población</label>
                 <input
                     id="population"
-                    type="number"
-                    value={formData.population}
-                    onChange={handleChange}
-                    className="mt-1 px-3 py-2 border border-gray-300 rounded-md bg-gray-100"
+                    type="text" // Use "text" to allow formatted values
+                    value={formData.population.toLocaleString('es-ES')} // Display the value with separators
+                    onChange={(e) => {
+                        // Remove dots and update the raw numeric value
+                        const rawValue = e.target.value.replace(/\./g, '').replace(/,/g, '');
+                        if (/^\d*$/.test(rawValue)) { // Ensure only numeric input
+                            setFormData((prev) => ({
+                                ...prev,
+                                population: rawValue === '' ? 0 : Number(rawValue), // Update the numeric value
+                            }));
+                        }
+                    }}
+                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                 />
                 {errors.population && <p className="text-red-500">{errors.population}</p>}
             </div>
@@ -120,22 +131,22 @@ export default function CountryForm({
                     type="text"
                     value={formData.language}
                     onChange={handleChange}
-                    className="mt-1 px-3 py-2 border border-gray-300 rounded-md bg-gray-100"
+                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                 />
                 {errors.language && <p className="text-red-500">{errors.language}</p>}
             </div>
             <div className="flex gap-4 items-center mt-6">
                 <Link
                     href={'/admin/countries'}
-                    className="w-full sm:w-auto bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                    className="w-full bg-red-600 text-white py-2 px-4 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
                 >
                     Volver
                 </Link>
                 <button
                     type="submit"
-                    className="w-full sm:w-auto bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                    className=" w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
                 >
-                    Guardar
+                    {onSubmit ? 'Guardar Cambios' : 'Crear Programa'}
                 </button>
             </div>
         </form>

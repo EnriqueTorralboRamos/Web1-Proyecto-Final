@@ -8,6 +8,7 @@ import { z } from 'zod';
 import CountrySelect from '@/src/components/country/CountrySelect';
 import ParticipantSelect from '@/src/components/program/ParticipantAutocomplete';
 import Link from 'next/link';
+import { format } from 'date-fns';
 
 interface ProgramFormProps {
   initialData?: {
@@ -131,9 +132,6 @@ export default function ProgramForm(
       </div>
 
       <div>
-        <label htmlFor="participants" className="block text-sm font-medium text-gray-700">
-          Participantes (se pueden añadir mas tarde)
-        </label>
         <ParticipantSelect onSelect={handleParticipantsSelect} initialParticipants={formData.participants} />
         {errors.participants && <p className="text-red-500">{errors.participants}</p>}
       </div>
@@ -145,8 +143,17 @@ export default function ProgramForm(
         <input
           id="startDate"
           type="date"
-          value={formData.startDate}
-          onChange={handleChange}
+          value={
+            formData.startDate
+              ? format(new Date(formData.startDate), 'yyyy-MM-dd') // Formatea solo si existe una fecha
+              : '' // Deja el campo vacío si no hay fecha
+          }
+          onChange={(e) => {
+            setFormData((prev) => ({
+              ...prev,
+              startDate: e.target.value, // Almacena la fecha en formato ISO (yyyy-MM-dd)
+            }));
+          }}
           className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
         />
         {errors.startDate && <p className="text-red-500">{errors.startDate}</p>}
@@ -159,8 +166,17 @@ export default function ProgramForm(
         <input
           id="endDate"
           type="date"
-          value={formData.endDate}
-          onChange={handleChange}
+          value={
+            formData.endDate
+              ? format(new Date(formData.endDate), 'yyyy-MM-dd') // Formatea solo si existe una fecha
+              : '' // Deja el campo vacío si no hay fecha
+          }
+          onChange={(e) => {
+            setFormData((prev) => ({
+              ...prev,
+              endDate: e.target.value, // Almacena la fecha en formato ISO (yyyy-MM-dd)
+            }));
+          }}
           className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
         />
         {errors.endDate && <p className="text-red-500">{errors.endDate}</p>}

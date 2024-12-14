@@ -2,7 +2,7 @@ import { getUsers } from '@/src/services/users/userServiceServer';
 import SkeletonTable from '../skeletons/SkeletonTable';
 import UserTableContent from './UserTableContent';
 import LoadingErrorCacther from '../temp-middleware-solution/LoadingErrorCatcher';
-import { ISearchUserParams } from '@/src/constants/searchUserParams';
+import { ISearchUserParams } from '@/src/interfaces/ISearchUserParams';
 interface UsersTableProps {
     filters: ISearchUserParams; 
 }

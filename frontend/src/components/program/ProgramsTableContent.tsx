@@ -12,16 +12,6 @@ import { CiEdit } from "react-icons/ci";
 
 
 
-interface Program {
-    _id: string;
-    name: string;
-    country: { name: string }; // Si necesitas mostrar el país
-    participants: string[]; // Array de IDs de participantes
-    startDate: string;
-    endDate: string;
-    status: string;
-}
-
 export default function ProgramsTableContent({ programs }: { readonly programs: ReadonlyArray<Program> }) {
   const [loadingId, setLoadingId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
