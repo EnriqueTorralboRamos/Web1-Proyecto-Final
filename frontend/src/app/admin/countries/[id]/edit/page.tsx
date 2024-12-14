@@ -7,6 +7,7 @@ import ProgramFormSkeleton from '@/src/components/skeletons/ProgramFormSkeleton'
 import LoadingErrorCacther from '@/src/components/temp-middleware-solution/LoadingErrorCatcher';
 import CountryForm from '@/src/components/country/CountryForm';
 import { updateCountry , getCountryById} from '@/src/services/country/countryServiceClient';
+import SkeletonCountryForm from '@/src/components/skeletons/CountryFormSkeleton';
 
 export default function EditCountryPague(){
     const {id} = useParams() 
@@ -60,11 +61,11 @@ export default function EditCountryPague(){
       setError('No se pudo actualizar el país.');
     }
   }
-  if (loading) return <LoadingErrorCacther><ProgramFormSkeleton /></LoadingErrorCacther>;
-  if (error) return <LoadingErrorCacther><div><p className="text-red-500">{error}</p><ProgramFormSkeleton /></div></LoadingErrorCacther>;
+  if (loading) return <LoadingErrorCacther><SkeletonCountryForm /></LoadingErrorCacther>;
+  if (error) return <LoadingErrorCacther><div><p className="text-red-500">{error}</p><SkeletonCountryForm /></div></LoadingErrorCacther>;
   return(
     <div className="container mx-auto mt-10">
-          <h1 className="text-2xl font-bold mb-4">Editar Programa</h1>
+          <h1 className="text-2xl font-bold mb-4">Editar País</h1>
           {country && <CountryForm initialData={country} onSubmit={handleSubmit} />}
       </div>
   )

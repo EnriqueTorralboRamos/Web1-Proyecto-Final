@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
+import SkeletonPermissionCheck from '../skeletons/SkeletonPermissionCheck';
 
 interface PrivateRouteProps {
   children: React.ReactNode;
@@ -41,7 +42,7 @@ export default function PrivateRoute({ children, role }: Readonly<PrivateRoutePr
 
   if (isAuthorized === null) {
     // Muestra un loader mientras verificamos
-    return <div>Cargando...</div>;
+    return <SkeletonPermissionCheck/>;
   }
 
   if (!isAuthorized) {
