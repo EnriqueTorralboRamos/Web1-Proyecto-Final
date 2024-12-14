@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import * as programService from '../services/programService';
+import jwt from 'jsonwebtoken';
 
 export const searchPrograms = async (req: Request, res: Response) => {
   try {    
@@ -46,8 +47,10 @@ export const getPrograms = async (req: Request, res: Response) => {
 
 export const getProgramById = async (req: Request, res: Response) => {
   try {
+    const userId= req.user?.id;
+    const role= req.user?.role;
     const { id } = req.params;
-    const program = await programService.getProgramById(id);
+    const program = await programService.getProgramById(id,userId , role);
     res.status(200).json(program);
   } catch (error: any) {
     console.error(error);

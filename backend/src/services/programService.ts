@@ -4,6 +4,7 @@ import ProgramStatus from "../enum/programStatus";
 import { calculateProgramStatus } from "../helpers/programHelpers";
 import User from "../models/User";
 import mongoose from "mongoose";
+import UserRoles from "../enum/userRoles";
 
 interface SearchProgramsParams {
     name?: string;
@@ -71,11 +72,32 @@ export const createProgram = async (
     return await newProgram.save();
 }
 
-export const getProgramById = async (programId: string) => {
+export const getProgramById = async (
+    programId: string,
+    userId: string,
+    role: string
+) => { 
+    
     const program = await Program.findById(programId).populate('country participants');
     if (!program) {
         throw new Error('Programa no encontrado');
     }
+    if (role !== UserRoles.Admin) {
+        // Verificar si el usuario está inscrito en el programa
+        const isParticipant = program.participants.some(
+          (participant: any) => participant._id.toString() === userId
+        );
+    
+        // Si el usuario no está inscrito, no devolver participantes
+        if (!isParticipant) {
+          program.participants = []; // No devolver participantes
+        } else {
+          // Si el usuario está inscrito, devolver solo su información
+          program.participants = program.participants.filter(
+            (participant: any) => participant._id.toString() === userId
+          );
+        }
+      }
     return program;
 }
 export const getPrograms = async () => {
