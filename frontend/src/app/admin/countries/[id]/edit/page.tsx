@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useParams } from 'next/navigation'; // Usa useParams en lugar de acceder a params directamente
-import ProgramFormSkeleton from '@/src/components/skeletons/ProgramFormSkeleton';
 import LoadingErrorCacther from '@/src/components/temp-middleware-solution/LoadingErrorCatcher';
 import CountryForm from '@/src/components/country/CountryForm';
 import { updateCountry , getCountryById} from '@/src/services/country/countryServiceClient';

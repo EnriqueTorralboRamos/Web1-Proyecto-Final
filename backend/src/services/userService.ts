@@ -46,7 +46,7 @@ export const createUser = async (name: string, email: string, password: string, 
     name, 
     email, 
     password: hashedPassword,
-    role: role || UserRoles.Admin
+    role: role || UserRoles.User
   });
   return await newUser.save();
 };

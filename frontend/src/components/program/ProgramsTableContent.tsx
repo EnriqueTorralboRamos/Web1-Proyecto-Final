@@ -9,6 +9,7 @@ import { deleteProgram } from '@/src/services/program/programServiceClient';
 import { MdDeleteOutline } from "react-icons/md";
 import { useRouter } from 'next/navigation';
 import { CiEdit } from "react-icons/ci";
+import { Program } from '@/src/interfaces/IProgram';
 
 
 

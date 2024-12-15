@@ -1,4 +1,4 @@
-interface Program {
+export interface Program {
     _id: string;
     name: string;
     country: { name: string }; // Si necesitas mostrar el país
