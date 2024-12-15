@@ -47,3 +47,8 @@ export const removeParticipantFromProgram = async (programId: string, userId: st
   const response = await axiosInstance.delete(`/programs/participants`,{data:{programId,userId}});
   return response.data;
 }
+
+export const getProgramByUserId = async (userId: string) => {
+  const response = await axiosInstance.get(`/programs/participants/${userId}`);
+  return response.data;
+}

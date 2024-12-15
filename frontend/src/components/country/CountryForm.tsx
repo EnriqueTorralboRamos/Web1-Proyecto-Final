@@ -43,7 +43,6 @@ export default function CountryForm({
     };
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        console.log('handleSubmit',formData);
         
         e.preventDefault();
         setErrors({});

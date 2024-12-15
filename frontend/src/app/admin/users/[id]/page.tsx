@@ -15,7 +15,7 @@ export default async function ProgramDetailsPage({ params }: { params: Promise<{
           <UserDetails userId={id} />
         </Suspense>
         <Suspense fallback={<></>}>
-          <UserProgramDetails programs={userPrograms} userId={id} />
+          <UserProgramDetails programs={userPrograms} userId={id} url='/admin' />
         </Suspense>
         
       </div>

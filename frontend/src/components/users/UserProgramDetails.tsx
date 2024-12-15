@@ -8,7 +8,7 @@ import { removeParticipantFromProgram } from '@/src/services/program/programServ
 interface Program {
   _id: string;
   name: string;
-  country: { name: string };
+  country: { _id:string, name: string };
   startDate: string;
   endDate: string;
 }
@@ -16,9 +16,10 @@ interface Program {
 interface UserProgramDetailsProps {
   programs?: Program[];
   userId: string;
+  url: string;
 }
 
-export default function UserProgramDetails({ programs=[], userId }: Readonly<UserProgramDetailsProps>) {
+export default function UserProgramDetails({ programs=[], userId ,url='/admin/programs'}: Readonly<UserProgramDetailsProps>) {
   const [error, setError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [loading, setLoading] = useState<string | null>(null);
@@ -72,7 +73,7 @@ export default function UserProgramDetails({ programs=[], userId }: Readonly<Use
             <div className="mt-4">
             <label className="block text-sm font-medium text-gray-700">País</label>
             <p className="mt-1 px-3 py-2 border border-gray-300 rounded-md bg-gray-100">
-                {program.country?.name || 'N/A'}
+                <Link href={`${url}/countries/${program.country?._id}`}>{program.country?.name || 'N/A'}</Link>
             </p>
             </div>
 
@@ -92,7 +93,7 @@ export default function UserProgramDetails({ programs=[], userId }: Readonly<Use
 
             <div className="flex gap-4 items-center mt-6">
             <Link
-                href={`/admin/programs/${program._id}`}
+                href={`${url}/programs/${program._id}`}
                 className="w-full sm:w-auto bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
             >
                 Más Detalles
