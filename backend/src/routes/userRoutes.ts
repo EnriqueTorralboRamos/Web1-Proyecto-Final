@@ -1,8 +1,12 @@
 import { Router } from 'express';
-import { createUser, deleteUser, getUserById, getUsers, recoverUser, updateUser } from '../controllers/userController';
+import { createUser, deleteUser, getUserById, getUsers, recoverUser, updateUser,searchUsers } from '../controllers/userController';
 import { authenticateToken, canAccessUser, isAdmin} from '../middleware/authMiddleware';
 
+
 const router = Router();
+
+router.route('/search')
+.get( authenticateToken,isAdmin, searchUsers); // solo admin puede ver todos los usuarios
 
 router.route('/')
 .get( authenticateToken, isAdmin, getUsers)

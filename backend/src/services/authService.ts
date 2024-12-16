@@ -2,10 +2,11 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import User from '../models/User';
 import UserRoles from '../enum/userRoles';
+import { findOneUserActive } from './userService';
 
 export const authenticateUser = async (email: string, password: string
 ) => {
-  const user = await User.findOne({ email });
+  const user = await findOneUserActive({ email });
   if (!user) {   
     throw new Error('Usuario no encontrado');
   }

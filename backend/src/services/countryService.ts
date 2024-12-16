@@ -1,5 +1,37 @@
 import Country from "../models/Country";
+import Program from "../models/Program";
 
+
+interface SearchCountriesParams {
+    name?: string;
+    code?: string;
+    populationMin?: number;
+    populationMax?: number;
+    language?: string;
+}
+
+export const searchCountries = async (filters: SearchCountriesParams) => {
+    const query: any = {};
+
+    if (filters.name) {
+        query.name = { $regex: filters.name, $options: 'i' };
+    }
+    if (filters.code) {
+        query.code = filters.code;
+    }
+    if (filters.populationMin && filters.populationMax) {
+        query.population = { $gte: filters.populationMin, $lte: filters.populationMax };
+    } else if (filters.populationMin) {
+        query.population = { $gte: filters.populationMin };
+    } else if (filters.populationMax) {
+        query.population = { $lte: filters.populationMax };
+    }
+    if (filters.language) {
+        query.language = filters.language;
+    }
+
+    return await Country.find(query);
+}
 
 export const createCountry = async (
     name: string, 
@@ -37,15 +69,19 @@ export const updateCountry = async (
     return await country.save();
 }
 
-export const deleteCountry = async (_id: string) => {
-    const country = await Country.findByIdAndDelete(_id);
+export const deleteCountry = async (countryId: string) => {
+    const existingPrograms = await Program.find({ country: countryId });
+  if (existingPrograms.length > 0) {
+    throw new Error('No se puede eliminar el país porque existen programas asociados');
+  }
+    const country = await Country.findByIdAndDelete(countryId);
     if(!country) {
         throw new Error('País no encontrado');
     }
 }
 
-export const getCountry = async (_id: string) => {
-    const country = await Country.findById(_id);
+export const getCountry = async (countryId: string) => {
+    const country = await Country.findById(countryId);
     if(!country) {
         throw new Error('País no encontrado');
     }

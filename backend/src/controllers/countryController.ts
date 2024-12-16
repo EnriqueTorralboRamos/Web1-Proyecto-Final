@@ -1,6 +1,24 @@
 import { Request, Response } from 'express';
 import * as countryService from '../services/countryService';
 
+export const searchCountries = async (req: Request, res: Response) => {
+    try {
+        const { name, code, populationMin,populationMax, language } = req.query;
+
+        const countries = await countryService.searchCountries({
+            name: name as string,
+            code: code as string,
+            populationMin: populationMin ? Number(populationMin) : undefined,
+            populationMax: populationMax ? Number(populationMax) : undefined,
+            language: language as string,
+        });
+        res.status(200).json(countries);
+    } catch (error: any) {
+        console.error(error);
+        res.status(500).json({ message: error.message || 'Error al buscar países' });
+    }
+}
+
 export const createCountry = async (req: Request, res: Response) => {
     try {
         const { name, code, population, language } = req.body;
@@ -21,6 +39,8 @@ export const createCountry = async (req: Request, res: Response) => {
 
 export const updateCountry = async (req: Request, res: Response) => {
     try {
+        console.log('updateCountry',req.body);
+        
         const { id } = req.params;
         const { name, code, population, language } = req.body;
 
@@ -45,7 +65,9 @@ export const deleteCountry = async (req: Request, res: Response) => {
         console.error(error);
         if (error.message === 'País no encontrado') {
             res.status(404).json({ message: error.message });
-        } else {
+        } else if (error.message === 'No se puede eliminar el país porque existen programas asociados') {
+            res.status(400).json({ message: error.message });
+        }else {
             res.status(500).json({ message: 'Error al eliminar el país' });
         }
     }

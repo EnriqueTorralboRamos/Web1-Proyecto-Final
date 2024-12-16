@@ -4,10 +4,10 @@ import * as authService from '../services/authService';
 export const login = async (req: Request, res: Response) => {
   try {
     const { email, password} = req.body;
-
+    
     // Llamar al servicio de autenticación
     const { token } = await authService.authenticateUser(email, password);
-
+    
     res.status(200).json({ token });
   } catch (error: any) {
     console.error(error);

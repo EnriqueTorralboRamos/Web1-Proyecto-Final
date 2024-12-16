@@ -4,13 +4,17 @@ import {
     updateCountry, 
     deleteCountry, 
     getCountry, 
-    getCountries 
+    getCountries, 
+    searchCountries
 } from '../controllers/countryController';
 import { authenticateToken, isAdmin } from '../middleware/authMiddleware';
 
 const router = Router();
 
 // Rutas para países
+router.route('/search')
+.get(authenticateToken, searchCountries); // Permitir que cualquier usuario vea los países (autenticado)
+
 router.route('/')
     .get(authenticateToken, getCountries) // Listar todos los países (autenticado)
     .post(authenticateToken, isAdmin, createCountry); // Crear un nuevo país (solo admin)
