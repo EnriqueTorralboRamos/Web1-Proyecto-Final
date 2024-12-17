@@ -17,6 +17,6 @@ export const login = async (data: LoginData) => {
 };
 
 export const register = async (data: RegisterData) => {
-  const response = await axiosInstance.post('/users', data);
+  const response = await axiosInstance.post('/auth/register', data);
   return response.data; // Devuelve datos relacionados con el registro
 };

@@ -68,7 +68,7 @@ La carpeta `app` contiene las rutas y páginas principales de la aplicación, us
     - Listar programas: `/admin/programs`
     - Ver detalles de programas: `/admin/programs/[id]`
   - **users/**: Gestión de usuarios (similar a `programs` y `countries`).
-  - **dashboard/**: Página principal del administrador.
+  - **/**: Página de bienvenida del administrador.
 
 - **login/** y **register/**: Autenticación y registro de usuarios.
 
@@ -102,7 +102,7 @@ La vista de administración está diseñada para gestionar recursos como **progr
 
 Rutas principales:
 
-- `/admin/dashboard`: Panel principal.
+- `/admin/`: Pagina de bienvenida.
 - `/admin/programs`: Gestión de programas.
 - `/admin/countries`: Gestión de países.
 - `/admin/users`: Gestión de usuarios.

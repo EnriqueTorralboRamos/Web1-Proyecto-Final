@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { login } from '../controllers/authController';
+import { login, register } from '../controllers/authController';
 import { authenticateToken, isAdmin } from '../middleware/authMiddleware';
 
 
@@ -12,4 +12,6 @@ router.get('/check-admin',authenticateToken, isAdmin, (req, res) => {
     res.json({ role: req.user?.role });
 
 });
+//ruta para registrar
+router.post('/register', register);
 export default router;

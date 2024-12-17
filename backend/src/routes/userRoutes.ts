@@ -10,7 +10,7 @@ router.route('/search')
 
 router.route('/')
 .get( authenticateToken, isAdmin, getUsers)
-.post(createUser)
+.post(authenticateToken, isAdmin, createUser)
 .put( authenticateToken,canAccessUser, updateUser);
 
 router.route('/:id')

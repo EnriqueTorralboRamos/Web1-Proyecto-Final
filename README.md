@@ -13,7 +13,7 @@ Este proyecto es una aplicación web integral diseñada para administrar program
 
 ---
 
-## 🛠 Backend
+## 🛠 [Backend](./backend/README.md)
 
 ### Descripción
 El backend está desarrollado en **Node.js** y **TypeScript**, utilizando **Mongoose** como ORM para MongoDB. Proporciona una **API RESTful** que incluye autenticación, gestión de programas, usuarios y países.
@@ -48,7 +48,7 @@ backend/
 
 ---
 
-## 💻 Frontend
+## 💻 [Frontend](./frontend/README.md)
 
 ### Descripción
 El frontend está desarrollado con **React** y **Next.js**, utilizando **TypeScript**. Implementa una interfaz limpia y responsiva usando **Tailwind CSS** y **Material UI**.
