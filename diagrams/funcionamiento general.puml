@@ -1,0 +1,55 @@
+@startuml
+actor "Administrador" as Admin
+actor "Usuario Final" as User
+
+package "Frontend" {
+    component "React - Next.js" as ReactApp
+}
+
+package "Backend" {
+    component "API Gateway" as Gateway
+
+    package "Auth Controller" {
+        control "Auth Service" as AuthCtrl
+        component "Auth Logic" as AuthService
+    }
+
+    package "Program Controller" {
+        control "Program Service" as ProgramCtrl
+        component "Program Logic" as ProgramService
+    }
+
+    package "User Controller" {
+        control "User Service" as UserCtrl
+        component "User Logic" as UserService
+    }
+
+    package "Country Controller" {
+        control "Country Service" as CountryCtrl
+        component "Country Logic" as CountryService
+    }
+}
+
+database "MongoDB" as DB
+file "JWT Tokens" as JWT
+
+Admin --> ReactApp
+User --> ReactApp
+ReactApp --> Gateway
+
+Gateway --> AuthCtrl
+Gateway --> ProgramCtrl
+Gateway --> UserCtrl
+Gateway --> CountryCtrl
+
+AuthCtrl --> AuthService
+ProgramCtrl --> ProgramService
+UserCtrl --> UserService
+CountryCtrl --> CountryService
+
+ProgramService --> DB
+UserService --> DB
+CountryService --> DB
+
+AuthService --> JWT
+@enduml

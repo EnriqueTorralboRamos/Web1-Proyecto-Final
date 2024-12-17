@@ -1,0 +1,43 @@
+@startuml
+left to right direction
+actor "Administrador" as Admin
+actor "Usuario Final" as User
+
+package "Sistema de Movilidad Internacional" {
+
+    Admin --> "Gestión de Programas"
+    Admin --> "Gestión de Usuarios"
+    Admin --> "Gestión de Países"
+
+    package "Gestión de Programas" {
+        usecase "Ver lista de programas" as P1
+        usecase "Crear un programa" as P2
+        usecase "Editar un programa" as P3
+        usecase "Eliminar un programa" as P4
+        usecase "Ver detalles de un programa" as P5
+    }
+
+    package "Gestión de Usuarios" {
+        usecase "Ver lista de usuarios" as U1
+        usecase "Crear un usuario" as U2
+        usecase "Editar un usuario" as U3
+        usecase "Eliminar un usuario" as U4
+        usecase "Ver detalles de un usuario" as U5
+    }
+
+    package "Gestión de Países" {
+        usecase "Ver lista de países" as C1
+        usecase "Crear un país" as C2
+        usecase "Editar un país" as C3
+        usecase "Eliminar un país" as C4
+        usecase "Ver detalles de un país" as C5
+    }
+
+    package "Acciones Usuario Final" {
+        usecase "Buscar programas por filtros" as UF1
+        usecase "Acceder a detalles de un programa" as UF2
+    }
+
+    User --> "Acciones Usuario Final"
+}
+@enduml
