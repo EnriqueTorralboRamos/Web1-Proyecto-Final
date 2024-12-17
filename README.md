@@ -152,6 +152,24 @@ cd sistema-movilidad
 
 ![Funcionamiento general](diagrams/svg/funcionamiento%20general.svg)
 ---
+## 🔒 **Roles de Usuario**
+El sistema de movilidad internacional cuenta con dos roles principales:
+
+### **1. Administrador**
+- Accede a todas las funcionalidades del sistema.
+- Puede:
+  - Gestionar usuarios.
+  - Gestionar programas.
+  - Gestionar países.
+- Tiene acceso a la **vista principal del administrador** y a todas las secciones de gestión.
+
+### **2. Usuario Estándar**
+- Accede únicamente a las secciones que se le permiten.
+- Permisos más limitados comparado con el administrador.
+- No puede eliminar ni editar otros usuarios o programas.
+
+---
+## [imagenes](img/README.MD)
 
 
 ## 📝 Contribuciones

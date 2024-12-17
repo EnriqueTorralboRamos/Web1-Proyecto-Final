@@ -396,7 +396,8 @@ Renderiza filas individuales en la tabla de usuarios. Incluye opciones para ver 
 ```
 
 ---
-
+## [Imagenes](../img/README.MD)
+---
 
 ## **Conclusión**
 Este sistema aprovecha las capacidades avanzadas de **Next.js** y React para construir una aplicación eficiente, modular y con una excelente experiencia de usuario.

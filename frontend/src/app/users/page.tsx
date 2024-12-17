@@ -83,7 +83,7 @@ export default function UserPage() {
           }}
           className="bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-700 focus:outline-none"
         >
-          Logout
+          Cerrar Sesión
         </button>
       </div>
 

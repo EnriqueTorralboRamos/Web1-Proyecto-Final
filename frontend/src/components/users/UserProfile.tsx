@@ -35,35 +35,41 @@ export default function UserProfile({ userId }: { userId: string }) {
   }
 
   return (
-    <div className="container mx-auto mt-10">
-        <h2 className="text-xl font-bold mb-4 text-center">Detalles del Usuario</h2>
-      <div className="space-y-6 bg-white p-6 rounded-md shadow-md border border-gray-300">
+    <div className="container mx-auto mt-6 max-w-md">
+      <h2 className="text-lg font-bold mb-4 text-center">Detalles del Usuario</h2>
+      <div className="space-y-4 bg-white p-4 rounded-md shadow-md border border-gray-300">
         <div>
-          <label className="block text-sm font-medium text-gray-700">Nombre</label>
-          <p className="mt-1 px-3 py-2 border border-gray-300 rounded-md bg-gray-100">{user.name}</p>
+          <label className="block text-xs font-medium text-gray-700">Nombre</label>
+          <p className="mt-1 px-2 py-1 border border-gray-300 rounded-md bg-gray-100 text-sm truncate">
+            {user.name}
+          </p>
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700">Correo Electrónico</label>
-          <p className="mt-1 px-3 py-2 border border-gray-300 rounded-md bg-gray-100">{user.email}</p>
+          <label className="block text-xs font-medium text-gray-700">Correo Electrónico</label>
+          <p className="mt-1 px-2 py-1 border border-gray-300 rounded-md bg-gray-100 text-sm truncate">
+            {user.email}
+          </p>
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700">Rol</label>
-          <p className="mt-1 px-3 py-2 border border-gray-300 rounded-md bg-gray-100">{user.role}</p>
+          <label className="block text-xs font-medium text-gray-700">Rol</label>
+          <p className="mt-1 px-2 py-1 border border-gray-300 rounded-md bg-gray-100 text-sm truncate">
+            {user.role}
+          </p>
         </div>
       </div>
 
-      <div className="flex gap-4 items-center mt-6">
+      <div className="flex justify-center gap-2 items-center mt-4">
         <Link
           href={'/admin/users'}
-          className="w-full sm:w-auto bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+          className="w-full sm:w-auto bg-blue-600 text-white py-1 px-3 rounded-md text-sm hover:bg-blue-700"
         >
           Volver
         </Link>
         <Link
           href={`/admin/users/${userId}/edit`}
-          className="w-full sm:w-auto bg-gray-600 text-white py-2 px-4 rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
+          className="w-full sm:w-auto bg-gray-600 text-white py-1 px-3 rounded-md text-sm hover:bg-gray-700"
         >
           Editar
         </Link>
